@@ -1,8 +1,13 @@
-Hello
-{% with request.user as user %}
-{% if user.is_authenticated %}
-{{ user.username }}
-{% else %}
-Anonymous
-{% endif %}
-{% endwith %}
+<html>
+    <head>
+        <title>{% include "fragments/title_fragment.html" %}</title>
+    </head>
+    <body>
+        {% include "fragments/page_header_fragment.html" %}
+        {% include "fragments/welcome_user_fragment.html" %}
+        {% include "fragments/intro_fragment.html" %}
+        {% include "fragments/common_links_fragment.html" %}
+        {% include "fragments/images_fragment.html" %}
+        {% include "fragments/donations_fragment.html" %}
+     </body>
+</html>
