@@ -7,7 +7,7 @@ from setuptools import setup
 setup(
 	name="k666",
 	install_requires=[
-		'Django',
 		'django-allauth',
+		'Django',
 	],
 )
