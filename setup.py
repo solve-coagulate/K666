@@ -8,5 +8,6 @@ setup(
 	name="k666",
 	install_requires=[
 		'Django',
+		'django-allauth',
 	],
 )
