@@ -9,5 +9,6 @@ setup(
 	install_requires=[
 		'django-allauth',
 		'Django',
+		 'django-messages','
 	],
 )
