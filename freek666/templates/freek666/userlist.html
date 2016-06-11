@@ -7,8 +7,8 @@
         {% include "fragments/intro_fragment.html" %}
         
         Users:
-        {% for user in object_list %}
-            <div>User: {{user.username}}</div>
+        {% for user in user_list %}
+            <div>{{user.id}}: {{user.username}}</div>
         {% endfor %}
         
         {% include "fragments/images_fragment.html" %}
