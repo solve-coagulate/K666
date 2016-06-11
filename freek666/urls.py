@@ -8,7 +8,7 @@ from .views import *
 urlpatterns = [
     # url(r'^index.html$', TemplateView.as_view(template_name="index.html")),
     url(r'^index.html$', RedirectView.as_view(url="/")),
-    url(r'^$', IndexView.as_view(template_name="index.html")),
-    url(r'^u/$', UserListView.as_view()),
+    # url(r'^$', IndexView.as_view(template_name="index.html")),
+    url(r'^$', UserListView.as_view()),
     # url(r'^$', RedirectView.as_view(url="/index.html")),
 ]

@@ -7,9 +7,7 @@
         {% include "fragments/intro_fragment.html" %}
         
         Users:
-        {% for user in user_list %}
-            <div>{{user.id}}: {{user.username}}</div>
-        {% endfor %}
+        {% include "fragments/userlist_fragment.html" %}
         
         {% include "fragments/images_fragment.html" %}
         {% include "fragments/donations_fragment.html" %}
