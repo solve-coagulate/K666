@@ -8,7 +8,7 @@ setup(
 	name="k666",
 	install_requires=[
 		'django-allauth',
+		'django-messages',
 		'Django',
-		'django-messages','
 	],
 )
