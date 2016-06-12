@@ -9,6 +9,6 @@ setup(
 	install_requires=[
 		'django-allauth',
 		'django-messages',
-		'Django',
+		'Django<1.9rc1',
 	],
 )
