@@ -16,6 +16,8 @@ if which virtualenv; then
 	        virtualenv env -p ${PYTHON}
         fi
 
+        pip install --upgrade 'pip<7'
+
         source ./env/bin/activate
         python setup.py install
         pip unzip django_messages # We want this gone!
