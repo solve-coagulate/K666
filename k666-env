@@ -17,6 +17,7 @@ if which virtualenv; then
         fi
 
         source ./env/bin/activate
+        pip install --upgrade 'pip<7' # We want this gone too! We need the latest version of pip that supports unzip.
         python setup.py install
         pip unzip django_messages # We want this gone!
 
