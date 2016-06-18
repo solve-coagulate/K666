@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('freek666.urls')),
     url(r'^accounts/', include('allauth.urls')),
+    url (r'^messages/', include('django_messages.urls')),
 ]
