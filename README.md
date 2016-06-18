@@ -1,6 +1,5 @@
 # K666: Free Speech as in Open Source.
 
-
 procrasti@k5-stats.org
 
 Forked by Orion Blastar for the FreeK666 project.
@@ -11,11 +10,15 @@ If you want to help or join contact Procrasti or Orion first.
 # Instructions
 
 ## 1. Clone Source Repository
+```
 $ git clone https://github.org/orionblastar/K666
 $ cd K666
+```
 
 ## 2. Create the environment
+```
 $ . ./k666-env
+```
 
 This starts the server, it should start up ready.
 

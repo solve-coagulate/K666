@@ -8,14 +8,18 @@
 # From: electrum/electrum-env
 # Modified: procrasti@k5-stats.org 13 Aug 2015
 
+PYTHON=python
+
 if which virtualenv; then
-    if which python; then
+    if which ${PYTHON}; then
         if ! [ -e ./env/bin/activate ]; then
-	        virtualenv env
+	        virtualenv env -p ${PYTHON}
         fi
 
         source ./env/bin/activate
+        pip install --upgrade 'pip<7' # We want this gone too! We need the latest version of pip that supports unzip.
         python setup.py install
+        pip unzip django_messages # We want this gone!
 
         # WHY DOESN'T THIS WORK FROM setup.py?
         # pip install django-recaptcha2
@@ -38,11 +42,10 @@ if which virtualenv; then
         export DJANGO_SETTINGS_MODULE="k666.settings"
 
         ./manage.py runserver "$@"
-
         # deactivate
     else
-        echo "You probably have to install python"
-        echo "sudo apt-get install python?"
+        echo "You probably have to install ${PYTHON}"
+        echo "sudo apt-get install python3?"
     fi
 else
     echo "You probably have to install virtualenv."
