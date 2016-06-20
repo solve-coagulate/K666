@@ -1,8 +1,12 @@
-Hello
-{% with request.user as user %}
-{% if user.is_authenticated %}
-{{ user.username }}
-{% else %}
-Anonymous
-{% endif %}
-{% endwith %}
+{% extends "base.html" %}
+
+{% block head_title %}
+    {% include "fragments/title_fragment.html" %}
+{% endblock head_title %}
+
+{% block content %}
+    {% include "fragments/page_header_fragment.html" %}
+    {% include "fragments/intro_fragment.html" %}
+    {% include "fragments/images_fragment.html" %}
+    {% include "fragments/donations_fragment.html" %}
+{% endblock content %}
