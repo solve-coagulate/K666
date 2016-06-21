@@ -4,10 +4,11 @@
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
+    {% include "fragments/page_header_fragment.html" %}
   </head>
   <body>
     {% block body %}
-{   {% block sidebar %}
+    {% block sidebar %}
     {% endblock sidebar %}
     {% if messages %}
     <div>
@@ -37,5 +38,6 @@
     {% endblock %}
     {% block extra_body %}
     {% endblock %}
+    <p>{% include "fragments/donations_fragment.html" %}</p>
   </body>
 </html>
