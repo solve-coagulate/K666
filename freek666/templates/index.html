@@ -1,12 +1,14 @@
-<html>
-    <head>
-        <title>{% include "fragments/title_fragment.html" %}</title>
-        <meta name=viewport content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        {% include "fragments/page_header_fragment.html" %}
-        {% include "fragments/intro_fragment.html" %}
-        {% include "fragments/images_fragment.html" %}
-        {% include "fragments/donations_fragment.html" %}
-     </body>
-</html>
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <meta name=viewport content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block head_title %}
+    {% include "fragments/title_fragment.html" %}
+{% endblock head_title %}
+
+{% block content %}
+    {% include "fragments/intro_fragment.html" %}
+    {% include "fragments/images_fragment.html" %}
+{% endblock content %}
