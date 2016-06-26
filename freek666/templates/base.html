@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% block head_title %}{% endblock %}</title>
+    <title>{% block head_title %}Welcome To K666{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
-    {% include "fragments/page_header_fragment.html" %}
+    {% block viewport_meta %}
+        <meta name=viewport content="width=device-width, initial-scale=1">
+    {% endblock %}
   </head>
   <body>
     {% block body %}
-    {% block sidebar %}
-    {% endblock sidebar %}
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-	{% for message in messages %}
-	<li>{{message}}</li>
-	{% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+        {% include "fragments/page_header_fragment.html" %}
+        {% block sidebar %}
+        {% endblock sidebar %}
+        {% if messages %}
+            <div>
+                <strong>Messages:</strong>
+                <ul>
+                {% for message in messages %}
+                    <li>{{message}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-	{% if user.is_authenticated %}
-	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-	{% else %}
-	<li><a href="{% url 'account_login' %}">Sign In</a></li>
-	<li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-	{% endif %}
-      </ul>
-    </div>
-    {% block content %}
-    {% endblock %}
+        <div>
+            <strong>Menu:</strong>
+            <ul>        
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+                <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+            {% else %}
+                <li><a href="{% url 'account_login' %}">Sign In</a></li>
+                <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+            {% endif %}
+            </ul>
+        </div>
+        {% block content %}
+        {% endblock %}
+        <p>{% include "fragments/donations_fragment.html" %}</p>
     {% endblock %}
     {% block extra_body %}
     {% endblock %}
-    <p>{% include "fragments/donations_fragment.html" %}</p>
   </body>
 </html>
