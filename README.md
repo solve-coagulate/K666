@@ -5,7 +5,7 @@ procrasti@k5-stats.org
 Forked by Orion Blastar for the FreeK666 project.
 orionblastar@gmail.com
 
-If you want to help or join contact Procrasti or Orion first.
+If you want to help or join contact Procrasti or Orion first. Just read the code of comduct first in this repository.
 
 # Instructions
 
