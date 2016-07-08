@@ -1,4 +1,5 @@
 # K666: Free Speech as in Open Source.
+[![Build Status](https://api.travis-ci.org/orionblastar/K666.svg)](https://travis-ci.org/orionblastar/K666)
 
 procrasti@k5-stats.org
 
