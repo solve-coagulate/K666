@@ -1,0 +1,21 @@
+version: '2'
+
+
+services:
+  freek666:
+    env_file: .env
+    build: .
+    ports: 
+      - 8000:8000
+    volumes: 
+      - .:/code
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+      
+volumes:
+  pgdata:
+    external: false
