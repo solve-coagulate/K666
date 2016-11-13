@@ -10,6 +10,10 @@
 
 PYTHON=python
 
+export DJANGO_SETTINGS_MODULE="k666.settings"
+export DEFAULT_DATABASE="sqlite3"
+export DEBUG=True
+
 if which virtualenv; then
     if which ${PYTHON}; then
         if ! [ -e ./env/bin/activate ]; then
@@ -39,7 +43,6 @@ if which virtualenv; then
             ./manage.py createsuperuser
         fi
 
-        export DJANGO_SETTINGS_MODULE="k666.settings"
 
         ./manage.py runserver "$@"
         # deactivate

@@ -1,3 +1,7 @@
+# Docker specific
+wait-for-it
+.env
+
 # Temporary text editor files
 *~
 

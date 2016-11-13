@@ -101,7 +101,7 @@ DATABASE_CHOICES = {
 }
 
 DATABASES = {
-    'default': DATABASE_CHOICES['postgresql'],
+    'default': DATABASE_CHOICES[os.environ['DEFAULT_DATABASE']],
 }
 
 
