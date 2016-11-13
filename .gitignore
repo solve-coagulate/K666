@@ -2,6 +2,9 @@
 wait-for-it
 .env
 
+# Data dumps
+dump.fixtures.json
+
 # Temporary text editor files
 *~
 
