@@ -17,6 +17,26 @@ $ cd K666
 ```
 
 ## 2. Create the environment
+
+### 2.1 Docker Compose (prefered method)
+
+#### Requires docker-compose
+```
+  $ sudo apt-get install docker.io
+  $ sudo apt-install python3-pip
+  $ sudo pip3 install docker-compose
+```
+#### Use the dev environment file
+```
+  $ ln -s .env.dev .env
+```
+
+#### Start it
+```
+  $ docker-compose up [-d] [--build]
+```
+
+### 2.2 Virtual Environment (depricated, works, uses sqlite3)
 ```
 $ . ./k666-env
 ```
