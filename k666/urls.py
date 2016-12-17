@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^', include('freek666.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^messages/', include('django_messages.urls')),
+    url(r'^comments/', include('comments.urls')),
+    
 ]

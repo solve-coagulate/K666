@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'freek666',
+    'comments',
     'django.contrib.sites',
     'allauth',
     'allauth.account',

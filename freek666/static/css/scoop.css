@@ -1,0 +1,30 @@
+.commenthead { border: 1px solid #006699;
+            background-color: #eeeeee; 
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size: smaller;}
+.commentbody {
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size: smaller;}
+            
+:link      { color: #006699; }
+:visited   { color: #003366; }
+
+BODY       { background-color: #ffffff;
+            color: #000000; }
+
+H1         { background-color: #EEEEEE;
+    font-size: 1.6em;
+    padding: 3px;
+    margin: 0px; }
+             
+.story_title H2 { font-size: 1.2em;
+                  color: #000000;
+                  display: inline; }
+
+.story_summary { border-bottom: 1px dashed black;
+                 padding-top: 0.5em; }
+
+.story_body { padding-top: 0.5em; }
+
+.story_info { background-color: #EEEEEE;
+              text-align: center; }             

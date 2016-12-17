@@ -1,0 +1,26 @@
+<div id="comment-{{comment.id}}">
+    <div class="commenthead">
+        <div><b>{{ comment.subject }}</b> (<a href="{% if comment.id %}{% url "comment-detail" comment.id %}{% else %}#{% endif %}">#{{ comment.id }}</a>)</div>
+        <div>by {{ comment.created_by }} on {{ comment.created_on }}</div>
+    </div>
+    <div class="commentbody">
+        <div>{{ comment.body | linebreaksbr }}</div>
+        <br />
+        <div>[ 
+            <a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return edit({{comment.id}});">Reply to This</a>
+            {% if comment.parent %}
+                | <a href="{% url "comment-detail" comment.parent.id %}">Parent</a>
+            {% endif %}
+        ]</div>
+    </div>
+    <div>
+        <dl><dt></dt><dd>    
+
+            {% comment %}{% include "comments/fragments/comment_form.html" %}{% endcomment %}
+            
+            {% for comment in comment.comment_set.all %}
+                {% include "comments/fragments/comment_detail.html" %}
+            {% endfor %}
+        </dd></dl>
+    </div>
+</div>

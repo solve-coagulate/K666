@@ -1,0 +1,22 @@
+{% extends "comments/comment_list.html" %}
+
+{% block content %}
+    <h1>Comment Preview</h1>
+    {% if comment.parent %}
+        {% with comment=comment.parent %}
+            {% include "comments/fragments/comment_detail.html" %}
+        {% endwith %}
+    {% endif %}
+    
+    <div class="preview">
+        {% include "comments/fragments/comment_detail.html" %}
+    </div>
+    
+    <br />
+    
+    {% with showform=True %}
+        {% if showform %} SHOW THE FORM {% endif %}
+        {% include "comments/fragments/comment_form.html" %}
+    {% endwith %}
+
+{% endblock content %}

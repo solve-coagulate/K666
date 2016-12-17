@@ -1,0 +1,14 @@
+{% comment %}<div id="ajax-comment-reply-form-{{comment.id}}">REPLY FORM GOES HERE... WE DON'T SEE THIS</div>{% endcomment%}
+<div class="preview hidden" id="comment-preview-{{comment.id}}"></div>
+
+<form class="{% if not showform and comment %}hidden{% endif %}" action="{% url 'add-comment' %}" method="post" >
+    {% csrf_token %}
+    <textarea class="comment_textbox" name="comment_text" id="comment-textbox-{{comment.id}}" placeholder="Subject on first line">{{comment.text}}</textarea><br />
+    <input type="hidden" name="comment_parent_id" value="{{comment.parent.id}}" />
+    <input type="submit" class="submit {% if not showform %}hidden{% endif %}" value="Post" id="comment-post-button-{{comment.id}}" onclick="return post({{comment.id}});"/>
+    <input type="submit" class="submit" name="preview" value="Preview" id="comment-preview-button-{{comment.id}}" onclick="return ajax_preview({{comment.id}});"/>
+    <input type="submit" class="submit hidden" value="Edit" id="comment-edit-button-{{comment.id}}" onclick="return edit({{comment.id}});"/>
+</form>
+    {% comment %}<input type="submit" class="submit" value="WHAT IS THIS?" onclick="what_this(this); return false;" />{% endcomment %}
+
+<div id="new-comments-{{comment.id}}"></div>

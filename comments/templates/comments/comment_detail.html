@@ -1,0 +1,6 @@
+{% extends "comments/comment_list.html" %}
+
+{% block content %}
+    <h1>{{comment.subject}}</h1>
+    {% include "comments/fragments/comment_detail.html" %}
+{% endblock content %}
