@@ -4,12 +4,12 @@
             font-size: smaller;}
 .commentbody {
             font-family: verdana, arial, helvetica, sans-serif;
-            font-size: smaller;}
+            font-size: smaller;
+ 		}
 
-.commentbody pre {
-	    /* background-color: #808080; */
-            font-family: verdana, arial, helvetica, sans-serif;
-            }
+.commentbody .body {
+            white-space: pre;
+}
 
 .comment_textbox { width: 30%; height: 6em;}
 .preview { 

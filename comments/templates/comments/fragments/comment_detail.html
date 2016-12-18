@@ -4,7 +4,7 @@
         <div>by {{ comment.created_by }} on {{ comment.created_on }}</div>
     </div>
     <div class="commentbody">
-        <pre>{{ comment.body | linebreaksbr }}</pre>
+        <div class="body">{{ comment.body | linebreaksbr }}</div>
         <div>{% if request.user.is_authenticated or comment.parent %}[ 
             {% if request.user.is_authenticated %}
 		<a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return edit({{comment.id}});">Reply to This</a>
