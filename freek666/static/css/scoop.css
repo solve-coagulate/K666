@@ -6,6 +6,11 @@
             font-family: verdana, arial, helvetica, sans-serif;
             font-size: smaller;}
 
+.commentbody pre {
+	    /* background-color: #808080; */
+            font-family: verdana, arial, helvetica, sans-serif;
+            }
+
 .comment_textbox { width: 30%; height: 6em;}
 .preview { 
     border: 1px solid red;}
