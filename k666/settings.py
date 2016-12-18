@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'freek666',
     'comments',
+    'freek666',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -127,7 +127,7 @@ STATIC_URL = '/static/'
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/index.html'
+LOGIN_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = (
     

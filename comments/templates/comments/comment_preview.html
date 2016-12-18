@@ -8,14 +8,15 @@
         {% endwith %}
     {% endif %}
     
+    {% if not require_preview %}
     <div class="preview">
         {% include "comments/fragments/comment_detail.html" %}
     </div>
+    {% endif %}
     
     <br />
     
     {% with showform=True %}
-        {% if showform %} SHOW THE FORM {% endif %}
         {% include "comments/fragments/comment_form.html" %}
     {% endwith %}
 

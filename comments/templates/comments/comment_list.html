@@ -2,171 +2,32 @@
 
 {% block extra_head %}
     <link rel="stylesheet" type="text/css" href="/static/css/scoop.css" >
-    <style>
-        .comment_textbox { width: 30%; height: 6em;}
-        .preview { 
-            border: 1px solid red;}
-        .hidden { display: none;}
-    </style>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script>
-        function ajax_preview(comment_id) {
-            if (!comment_id) {
-                comment_id="";
-            };
-            reply_preview = document.getElementById("comment-preview-" + comment_id);
-            reply_preview.innerHTML = "Fetching Preview...";
-            reply_preview.classList.remove("hidden");
-
-            textarea = document.getElementById("comment-textbox-" + comment_id);
-            preview_button = document.getElementById("comment-preview-button-" + comment_id);
-            post_button = document.getElementById("comment-post-button-" + comment_id);
-            edit_button = document.getElementById("comment-edit-button-" + comment_id);
-            // alert(textarea.value);
-            // return false;
-            text = textarea.value;    
-            // if (!text) text = textarea.val();
-            
-            $.ajax({
-                url : "/comments/ajax_preview.html",
-                type : "POST",
-                data : { comment_text : text, parent_comment_id : comment_id },
-                // handle success response
-                success : function(json) {
-                    reply_preview.innerHTML = json.html;
-                    textarea.classList.add("hidden");
-                    preview_button.classList.add("hidden");
-                    post_button.classList.remove("hidden");
-                    edit_button.classList.remove("hidden");
-                    // textarea.focus();
-                    // alert(json.markdown);
-                    return false;
-                },
-                error : function(xhr, status, error) {
-                    // alert(xhr.responseText)
-                    reply_preview.innerHTML = "PREVIEW FAILURE: " + status + " " + error  + "<pre>" + xhr.responseText + "</pre>";
-                    // textarea.focus();
-                },
-            });
-            
-            return false;
-        }
-
-        function edit(comment_id) {
-            if (!comment_id) {
-                comment_id="";
-            };
-            reply_preview = document.getElementById("comment-preview-" + comment_id);
-            textarea = document.getElementById("comment-textbox-" + comment_id);
-            textarea.parentNode.classList.remove("hidden");
-            preview_button = document.getElementById("comment-preview-button-" + comment_id);
-            post_button = document.getElementById("comment-post-button-" + comment_id);
-            edit_button = document.getElementById("comment-edit-button-" + comment_id);
-
-            textarea.classList.remove("hidden");
-            preview_button.classList.remove("hidden");
-            post_button.classList.remove("hidden");
-            reply_preview.classList.add("hidden");
-            edit_button.classList.add("hidden");
-            
-            return false;
-        }
-        
-        function post(comment_id) {
-            if (!comment_id) {
-                comment_id="";
-            };
-            reply_preview = document.getElementById("comment-preview-" + comment_id);
-            new_comments = document.getElementById("new-comments-" + comment_id);
-            new_comment = document.createElement("div");
-            $(new_comments).after(new_comment);
-            // new_comments.insertBefore(new_comment, new_comments.childNodes[0]);
-            new_comment.innerHTML = "Posting New Comment...";
-            new_comment.classList.remove("hidden");
-            
-            textarea = document.getElementById("comment-textbox-" + comment_id);
-            preview_button = document.getElementById("comment-preview-button-" + comment_id);
-            post_button = document.getElementById("comment-post-button-" + comment_id);
-            edit_button = document.getElementById("comment-edit-button-" + comment_id);
-            // alert(textarea.value);
-            // return false;
-            text = textarea.value;    
-            // if (!text) text = textarea.val();
-            
-            $.ajax({
-                url : "/comments/ajax_add.html",
-                type : "POST",
-                data : { comment_text : text, parent_comment_id : comment_id },
-                // handle success response
-                success : function(json) {
-                    new_comment.innerHTML = json.html;
-                    textarea.value = "";
-
-                    if (comment_id) {
-                        textarea.parentNode.classList.add("hidden");
-                    };
-                                        
-                    textarea.classList.remove("hidden");
-                    preview_button.classList.remove("hidden");
-                    post_button.classList.remove("hidden");
-                    reply_preview.classList.add("hidden");
-                    edit_button.classList.add("hidden");
-                    // textarea.focus();
-                    // alert(json.markdown);
-                    return false;
-                },
-                error : function(xhr, status, error) {
-                    // alert(xhr.responseText)
-                    new_comment.innerHTML = "COMMENT POSTING FAILURE: " + status + " " + error + "<pre>" + xhr.responseText + "</pre>";
-                    // textarea.focus();
-                },
-            });
-            
-            return false;
-        }
-        
-        function ajax_reply(comment_id, link) {
-            clone = $("#ajax_form_template").clone();
-            clone.attr("id", "new_ajax_form");
-            // alert(link.parentNode);
-            // link.parentNode.appendChild(clone);
-            txt2 = document.createElement("div");
-            // txt2.appendChild(document.createTextNode("ELLO ELLO ELLO"));
-            txt2.innerHTML="YEAHAW!!";
-            // $(link.parentNode).after(txt1);
-            // alert(txt2);
-            link.parentNode.appendChild(txt2);
-            $("#ajax-comment-reply-form-" + comment_id).after(clone);
-            clone.get(0).classList.remove("hidden");
-            return false;
-        };
-        
-        function what_this(obj) {
-            NOTSOGOOD;
-            alert(obj);
-        }
-    </script>
-    
+    <script src="/static/js/ajax_comments.js"></script>
+   
 {% endblock %}
     
 {% block content %}
-    <div class="blank_box"><h1>Comments </h1></div>
+    {% include "fragments/intro_fragment.html" %}
+    <h1>Comments </h1>
 
-    {% include "comments/fragments/comment_form.html" %}
+    {% if request.user.is_authenticated %}
+	{% include "comments/fragments/comment_form.html" %}
 
-    <script>
-        // If we're running a suitable javascript, show the post button!
-        // Do this before loading all the comments
-        ( function() { 
-                post_button = document.getElementById("comment-post-button-");
-                post_button.classList.remove("hidden");
-            }
-        )();
-    </script>
-    
+        <script>
+            // If we're running a suitable javascript, show the post button!
+            // Do this before loading all the comments
+            ( function() { 
+                    post_button = document.getElementById("comment-post-button-");
+                    post_button.classList.remove("hidden");
+                }
+            )();
+        </script>    
+    {% endif %}
+
     <div>
-    {% for comment in comments %}
-        {% include "comments/fragments/comment_detail.html" %}
-    {% endfor %}
+        {% for comment in comments %}
+            {% include "comments/fragments/comment_detail.html" %}
+        {% endfor %}
     </div>
 {% endblock %}

@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+import comments
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('freek666.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^messages/', include('django_messages.urls')),
     url(r'^comments/', include('comments.urls')),
+    url(r'^$', comments.views.list ),
     
 ]

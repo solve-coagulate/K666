@@ -16,58 +16,32 @@ def detail(request, id):
     context = {'id': id, 'comment': comment}
     return render(request, "comments/comment_detail.html", context=context)
 
-def preview(request):
-    text = request.POST['comment_text']
-    user = request.user
-    
-    parent = None
-    if "parent_comment_id" in request.POST.keys():
-        parent_comment_id = int(request.POST["parent_comment_id"])
-        parent = Comments.objects.get(id=parent_comment_id)
-
-    comment = Comment(text=text, created_by=user, parent=parent)
-
-    return render(request, "comments/comment_preview.html", context = {
-        'comment': comment,
-        })
-
 def add(request):    
     data = request.POST
     if not request.method == "POST":
         return HttpResponseRedirect(reverse("comment-list"))
         
+    preview = False
     if "preview" in data.keys():
-        return preview(request)
+        preview = True
+        # return preview(request)
 
     text = request.POST['comment_text']
-        
-    # attached_type = request.POST['attached_type']
-    # attached_id = request.POST['attached_id']
-    
-    # attach_to = None
-    # if attached_type and attached_id:
-    #     ct = ContentType.objects.get(model=attached_type)
-    #     attach_to = ct.get_object_for_this_type(id=attached_id)
-
     user = request.user
     
-    # if not user.is_authenticated():
-    #     user, created = User.objects.get_or_create(username='anonymous')
-
-    # ip_address=get_client_ip(request)
-    
-    # if is_anonymous(user) and not check_captcha(request):
-    #     return HttpResponse("Oh dear! You failed the captcha! Try going back, copy and pasting and reloading the page and then replying to the comment you wanted to, but get your captcha right!")
-
     parent = None
-    if "parent_comment_id" in request.POST.keys():
-        parent_comment_id = int(request.POST["parent_comment_id"])
-        parent = Comments.objects.get(id=parent_comment_id)
+    if "comment_parent_id" in request.POST.keys() and request.POST["comment_parent_id"]:
+        comment_parent_id = int(request.POST["comment_parent_id"])
+        parent = Comment.objects.get(id=comment_parent_id)
 
     comment = Comment(text=text, created_by=user, parent=parent)
-    comment.save()
+    if not preview:
+        comment.save()
+        return HttpResponseRedirect(reverse("comment-detail", kwargs={"id": comment.id}))
 
-    return HttpResponseRedirect(reverse("comment-detail", kwargs={"id": comment.id}))
+    return render(request, "comments/comment_preview.html", context = {
+        'comment': comment,
+        })
     # return HttpResponseRedirect(request.META["HTTP_REFERER"] + "#comment-%s" % comment.id)
 
 def reply(request, id):
@@ -78,8 +52,8 @@ def reply(request, id):
     comment = Comment(text=text, created_by=user, parent=parent)
     return render(request, "comments/comment_preview.html", context = {
         'comment': comment,
+	'require_preview': True,
         })
-
 
 import json
 from django.views.decorators.csrf import csrf_exempt

@@ -6,21 +6,21 @@
     <div class="commentbody">
         <div>{{ comment.body | linebreaksbr }}</div>
         <br />
-        <div>[ 
-            <a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return edit({{comment.id}});">Reply to This</a>
-            {% if comment.parent %}
-                | <a href="{% url "comment-detail" comment.parent.id %}">Parent</a>
+        <div>{% if request.user.is_authenticated or comment.parent %}[ 
+            {% if request.user.is_authenticated %}
+		<a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return edit({{comment.id}});">Reply to This</a>
             {% endif %}
-        ]</div>
+	    {% if request.user.is_authenticated and comment.parent %}|{% endif %}
+            {% if comment.parent %}
+                <a href="{% url "comment-detail" comment.parent.id %}">Parent</a>
+            {% endif %}
+        ]{% endif %}</div>
+	{% if comment.parent %}<br />{% endif %}
     </div>
-    <div>
-        <dl><dt></dt><dd>    
-
-            {% comment %}{% include "comments/fragments/comment_form.html" %}{% endcomment %}
-            
+	<dl><dt></dt><dd>
+            {% include "comments/fragments/comment_form.html" %}
             {% for comment in comment.comment_set.all %}
                 {% include "comments/fragments/comment_detail.html" %}
             {% endfor %}
-        </dd></dl>
-    </div>
+        </dd></dl> 
 </div>

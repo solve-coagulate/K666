@@ -5,6 +5,11 @@
 .commentbody {
             font-family: verdana, arial, helvetica, sans-serif;
             font-size: smaller;}
+
+.comment_textbox { width: 30%; height: 6em;}
+.preview { 
+    border: 1px solid red;}
+.hidden { display: none;}
             
 :link      { color: #006699; }
 :visited   { color: #003366; }
@@ -28,3 +33,5 @@ H1         { background-color: #EEEEEE;
 
 .story_info { background-color: #EEEEEE;
               text-align: center; }             
+
+
