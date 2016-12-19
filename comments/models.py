@@ -7,7 +7,7 @@ class Comment(models.Model):
     text = models.TextField()
     created_by = models.ForeignKey(User)
     created_on = models.DateTimeField(auto_now_add=True)
-    parent = models.ForeignKey('Comment', null=True, db_index=True)
+    parent = models.ForeignKey('Comment', null=True, blank=True, db_index=True)
     
     class Meta:
         ordering = ['-id']
