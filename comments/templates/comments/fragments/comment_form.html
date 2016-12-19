@@ -9,6 +9,8 @@
     {% endif %}
     <input type="submit" class="submit" name="preview" value="Preview" id="comment-preview-button-{{comment.id}}" onclick="return ajax_preview({{comment.id}});"/>
     <input type="submit" class="submit hidden" value="Edit" id="comment-edit-button-{{comment.id}}" onclick="return edit({{comment.id}});"/>
+    <p />
 </form>
+
 
 <div id="new-comments-{{comment.id}}"></div>
