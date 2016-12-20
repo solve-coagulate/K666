@@ -8,7 +8,7 @@
  		}
 
 .commentbody .body {
-            white-space: pre;
+            white-space: pre-wrap;
 }
 
 .comment_textbox { width: 30%; height: 6em;}
