@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import re
 
 SUBJECT_LENGTH=120
 
@@ -39,6 +40,34 @@ class Comment(models.Model):
             lines = lines[1:]
 
         return '\n'.join(lines)
+
+    def story_intro(self):
+        body = self.body()
+        fold = re.search('---+', body)
+        if fold:            
+            lines = body[:fold.span()[0]].split('\n')
+            if len(lines) and lines[-1] == "":
+                lines = lines[:-1]
+            return '\n'.join(lines)
+        return body
+        
+    def story_body(self):
+        body = self.body()
+        fold = re.search('---+', body)
+        if fold:
+            lines = body[fold.span()[1]:].split('\n')
+            if len(lines) and lines[0] == "":
+                lines = lines[1:]
+            if len(lines) and lines[0] == "":
+                lines = lines[1:]
+            return '\n'.join(lines)
+        return ""
+    
+    def replies(self):
+        total = 0
+        for comment in self.comment_set.all():
+            total += 1 + comment.replies()
+        return total
 
     def __str__(self):
         return "Comment: #%d by %s on %s --- %s" % (self.id or 0, self.created_by, self.created_on, self.text[:120])
