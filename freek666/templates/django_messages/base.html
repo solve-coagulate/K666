@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block content %}
+{% endblock %}
+{% block sidebar %}
+    {% with msg_sidebar_box_tmpl="django_messages/sidebar_menu.html" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

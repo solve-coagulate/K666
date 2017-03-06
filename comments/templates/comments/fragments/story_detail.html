@@ -1,0 +1,11 @@
+<div class='story_summary' id="comment-{{comment.id}}">
+    <div class="story_title"><h2>{{ comment.subject }}</h2></div>
+    <br />
+    <div class="story_meta">
+        <div>By <a href="#">{{ comment.created_by }}</a></div>
+        <div>Posted on {{ comment.created_on }}</div>
+    </div><p />
+    <div class="intro_text">{{ comment.story_intro | linebreaksbr }}</div>
+	<br />
+    <div>({{ comment.replies }} comments, ?? new, ?? words in story) <a class="light" href="{% url 'story-detail' id=comment.id %}">Full Story</a></div><br />
+</div>

@@ -1,0 +1,35 @@
+<div class="box">
+    <h2>Account</h2>    
+    <div>
+        {% include "fragments/welcome_user_fragment.html" %}
+    </div>
+    {% if user.is_authenticated %}
+        [<a href="/accounts/profile/">Profile</a>]
+        [<a href="{% url 'account_email' %}">Change E-mail</a>]
+        [<a href="{% url 'account_logout' %}">Sign Out</a>]
+    {% else %}
+        [<a href="{% url 'account_login' %}">Sign In</a>]
+        [<a href="{% url 'account_signup' %}">Sign Up</a>]
+    {% endif %}
+</div>
+{% if user.is_authenticated %}
+    <div class="box">
+        {% include msg_sidebar_box_tmpl|default:"fragments/message_sidebar_box.html" %}
+    </div>
+{% endif %}
+<div class="box">
+    <h2>Other Links</h2>    
+    [<a href="/static/index.html">Static Index</a>]
+    [<a href="/index.html">Old Index</a>]
+    [<a href="{% url 'story-list' %}">Stories</a>]        
+</div>
+{% if user.is_staff %}
+    <div class="box">
+        <h2>Admin</h2>
+            [<a href="/admin">Admin</a>]
+    </div>
+{% endif %}
+<div class="box">
+    <h2>About</h2>
+    {% include "fragments/intro_fragment.html" %}
+</div>

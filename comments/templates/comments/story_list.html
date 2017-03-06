@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/ajax_comments.js"></script>
+   
+{% endblock %}
+    
+{% block nosidebar %}
+    <div class="sidebar">
+    
+        <DIV class="box">
+        <H2>Menu</H2>
+        <FONT FACE="arial, Helvetica, Sans-Serif" SIZE=2>
+
+        <FONT FACE="arial, Helvetica, Sans-Serif" SIZE=2>
+
+        + <A HREF="/newuser">create account</A><BR>
+        + <A HREF="/special/faq">faq</A><BR>
+        + <A HREF="/search">search</A>
+        </FONT>
+        </FONT>
+        </DIV>
+
+        <DIV class="box">
+        <H2>Login</H2>
+        <FONT FACE="arial, Helvetica, Sans-Serif" SIZE=2>
+        <!---- also turn off OP for new user--->
+        <P></P>
+        <P><FONT FACE="verdana, arial, helvetica, sans-serif" SIZE=2><B><A CLASS="light" HREF="/newuserz">Make a new account</A></B>
+        </FONT></P>
+        <!--- end new user block--->
+
+        <DIV class="loginform"><P><FORM NAME="login" ACTION="" METHOD="post">
+        <FONT FACE="arial, Helvetica, Sans-Serif" SIZE=2>Username: <INPUT TYPE="text" SIZE=12 NAME="uname">
+        <BR>Password: <INPUT TYPE="password" SIZE=12 NAME="pass">
+        <BR><INPUT TYPE="submit" NAME="login" VALUE="Login">
+        <INPUT TYPE="submit" NAME="mailpass" VALUE="Mail Password"></FONT>
+        </FORM></DIV>
+        </FONT>
+        </DIV>
+
+        <div class="box">
+        <h2>Lorem ipsum dolor sit</h2> amet, consectetur adipiscing elit. Vestibulum convallis vel risus nec placerat. Nam vel tincidunt mi, vitae aliquam ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor nisl vitae mi aliquet, quis pulvinar orci rhoncus. Ut gravida tortor libero, vitae gravida leo aliquam id. Vivamus nec augue posuere, imperdiet lacus vel, interdum diam. Nulla sed est tellus. Vivamus at sagittis dolor, sed luctus nunc.
+
+        Fusce sit amet auctor lectus. Vivamus sed elit lobortis quam auctor vestibulum quis eu lectus. Suspendisse ut nisi vulputate sem gravida blandit. Vestibulum pulvinar vitae nulla quis viverra. Suspendisse feugiat sodales nibh ac blandit. Nam condimentum tincidunt imperdiet. Nam nec turpis pellentesque, dapibus nisi sed, facilisis dolor. Quisque fermentum ex enim, sit amet sodales turpis euismod non. Donec efficitur eu diam at accumsan. Donec ut neque in nunc aliquam cursus. Nunc enim lectus, tristique nec augue iaculis, laoreet interdum dolor. Nam semper aliquet quam, eu faucibus sem.
+
+        Duis dictum bibendum purus at imperdiet. Aliquam non neque laoreet purus vestibulum porttitor. Praesent a venenatis diam, et interdum ante. Quisque at mi tortor. Curabitur blandit mi at odio dignissim, imperdiet congue turpis bibendum. Morbi vehicula consequat leo, a vestibulum diam posuere eu. Quisque rutrum aliquet ipsum sed placerat. Mauris viverra vitae magna eget accumsan. Vestibulum ut gravida risus. Cras volutpat quam sit amet nulla auctor faucibus. Sed eget libero id ipsum tincidunt scelerisque. Nulla id lorem urna. Etiam ex arcu, iaculis nec cursus et, sagittis eget quam. Phasellus at ante ex. Aenean non ligula commodo, cursus metus vitae, elementum augue. Ut a neque lacus.
+        </div>
+    </div>
+{% endblock nosidebar %}
+    
+{% block content %}
+    {% comment %} {% include "fragments/intro_fragment.html" %} {% endcomment %}
+    <h1>Latest News</h1>                
+
+    {% if request.user.is_authenticated %}
+    {% comment %} {% include "comments/fragments/comment_form.html" %} {% endcomment %}
+
+        <script>
+            // If we're running a suitable javascript, show the post button!
+            // Do this before loading all the comments
+            ( function() { 
+                    post_button = document.getElementById("comment-post-button-");
+                    post_button.classList.remove("hidden");
+                }
+            )();
+        </script>    
+    {% endif %}
+
+    <div>
+        {% for comment in comments %}
+            {% include "comments/fragments/story_detail.html" %}
+        {% endfor %}
+    </div>
+    
+    {% include "comments/fragments/dsmb_story_summary_example.html" %}
+{% endblock %}

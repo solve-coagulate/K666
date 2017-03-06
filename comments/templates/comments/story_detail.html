@@ -1,0 +1,25 @@
+{% extends "comments/story_list.html" %}
+
+{% block content %}
+    {% comment %} <h1>{{comment.subject}}</h1> {% endcomment %}
+    
+    {% include "comments/fragments/story_detail.html" %}
+    <div class="story_body">{{ comment.story_body }}</div>
+{% endblock content %}
+
+{% block full_width_content %}
+    <div class="story_info">
+        <a class="light" href="{% url 'story-detail' id=comment.id %}">{{comment.subject}}</a> | <b>6</b> comments (0 hidden) | <b><a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return edit({{comment.id}});">Post A Comment</a></b>
+    </div>
+    
+    {% if request.user.is_authenticated %}
+        {% include "comments/fragments/comment_form.html" with showform=False %}
+    {% endif %}
+ 
+
+    <div class="full-width-content">
+        {% for comment in comment.comment_set.all %}
+            {% include "comments/fragments/comment_detail.html" %}
+        {% endfor %}
+    </div>
+{% endblock %}
