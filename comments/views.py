@@ -10,6 +10,17 @@ def list(request):
         'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None),
         })
 
+def story_list(request):
+    return render(request, "comments/story_list.html", context= {
+        'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None)[:8],
+        })        
+
+def story_detail(request, id):
+    id = int(id)
+    comment = Comment.objects.get(id=id)
+    context = {'id': id, 'comment': comment}
+    return render(request, "comments/story_detail.html", context=context)
+
 def detail(request, id):
     id = int(id)
     comment = Comment.objects.get(id=id)

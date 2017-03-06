@@ -3,10 +3,12 @@ from django.conf.urls import include, url
 from django.views.generic.base import RedirectView
 from django.views.generic.base import TemplateView
 
-from .views import list, add, detail, reply, ajax_preview, ajax_add
+from .views import list, story_list, story_detail, add, detail, reply, ajax_preview, ajax_add
 
 urlpatterns = [
     url(r'^list.html$', list, name="comment-list"),
+    url(r'^story_list.html$', story_list, name="story-list"),
+    url(r'^story/(?P<id>[0-9]+)$', story_detail, name="story-detail"),
     url(r'^add.html$', add, name="add-comment"),
     url(r'^comment/(?P<id>[0-9]+)$', detail, name="comment-detail"),
     url(r'^reply/(?P<id>[0-9]+)$', reply, name="comment-reply"),
