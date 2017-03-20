@@ -24,6 +24,6 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^messages/', include('django_messages.urls')),
     url(r'^comments/', include('comments.urls')),
-    url(r'^$', comments.views.list ),
+    url(r'^$', comments.views.story_list ),
     
 ]

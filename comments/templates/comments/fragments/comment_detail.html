@@ -12,12 +12,12 @@
             {% endif %}
 	    {% if request.user.is_authenticated and comment.parent %}|{% endif %}
             {% if request.user.is_authenticated %}
-		<a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return edit({{comment.id}});">Reply to This</a>
+		<a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return ajax_reply({{comment.id}});">Reply to This</a>
             {% endif %}
         ]{% endif %}</div>
     </div>
 	<dl><dt></dt><dd>
-            {% include "comments/fragments/comment_form.html" %}
+            <div class="hidden" id="reply-form-{{comment.id}}">Loading reply form for comment {{comment.id}}...</div>
             {% for comment in comment.comment_set.all %}
                 {% include "comments/fragments/comment_detail.html" %}
             {% endfor %}

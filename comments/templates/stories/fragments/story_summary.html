@@ -7,5 +7,5 @@
     </div><p />
     <div class="intro_text">{{ comment.story_intro | linebreaksbr }}</div>
 	<br />
-    <div>({{ comment.replies }} comments, ?? new, ?? words in story) <a class="light" href="{% url 'story-detail' id=comment.id %}">Full Story</a></div><br />
+    <div>({{ comment.replies }} comments, ?? new, ?? words in story) <a class="light" href="{% if comment.id %}{% url 'story-detail' id=comment.id %}{% else %}#{% endif %}">Full Story</a></div><br />
 </div>

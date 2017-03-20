@@ -1,7 +1,6 @@
-.commentbody, .body, .commenthead {
-            /* background-color: #99ffee; */
-            /* white-space: pre-wrap; */
-            word-wrap: break-word;
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
 }
 
 .commenthead { border: 1px solid #006699;
@@ -29,9 +28,9 @@ BODY       { background-color: #ffffff;
             color: #000000; }
 
 H1         { background-color: #EEEEEE;
-    font-size: 1.6em;
-    padding: 3px;
-    margin: 0px; }
+             font-size: 1.6em;
+             padding: 3px;
+             margin: 0px; }
              
 .story_title H2 { font-size: 1.2em;
                   color: #000000;
@@ -40,8 +39,8 @@ H1         { background-color: #EEEEEE;
 .story_summary { border-bottom: 1px dashed black;
                  padding-top: 0.5em; 
                  padding: 0.5em;
-        font-family: verdana, arial, helvetica, sans-serif;
-    font-size: smaller;
+                 font-family: verdana, arial, helvetica, sans-serif;
+                 font-size: smaller;
 
 }
 
@@ -60,14 +59,12 @@ H1         { background-color: #EEEEEE;
 .intro_text {
     /* background-color: #999999; */
     white-space: pre-wrap;
-    word-wrap: break-word;
 }
 
 .story_body { padding-top: 0.5em; 
     padding: 0.5em;
     font-family: verdana, arial, helvetica, sans-serif;
     white-space: pre-wrap;
-    word-wrap: break-word;
     font-size: smaller;
 }
 
@@ -92,27 +89,32 @@ H1         { background-color: #EEEEEE;
              margin-bottom: 3px; }              
               
 .sidebar {
-    padding: 1%;
+     padding: 1%;
      float: right;
-     width: 23%;     
-     word-wrap: break-word;
+     width: 100%;
      /* background-color: blue; */
  }
 
 .content {
-    padding: 0%;
+     padding: 0%;
      float: left;
-     width: 73%;     
+     width: 100%;     
  }
  
- @media only screen and (max-width: 500px) {
-   .content, .sidebar, .comment_textbox {
-       width: 100%;
-       /* background-color: red; */
-   }
+@media only screen and (min-width: 500px) {
+  .sidebar {
+     width: 23%;     
+  }
+   
+  .content {
+     width: 73%;     
+  }
 }
 
 .donations {
     white-space: pre-wrap;
-    word-wrap: break-word;
+}
+
+.red {
+    background-color: red;
 }

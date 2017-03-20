@@ -2,11 +2,15 @@
     <h2>Account</h2>    
     <div>
         {% include "fragments/welcome_user_fragment.html" %}
+        {% if user.is_authenticated %}
+          [<a href="{% url 'add-comment' %}">+ submit story</a>]
+        {% endif %}
     </div>
     {% if user.is_authenticated %}
         [<a href="/accounts/profile/">Profile</a>]
         [<a href="{% url 'account_email' %}">Change E-mail</a>]
         [<a href="{% url 'account_logout' %}">Sign Out</a>]
+        
     {% else %}
         [<a href="{% url 'account_login' %}">Sign In</a>]
         [<a href="{% url 'account_signup' %}">Sign Up</a>]
@@ -22,6 +26,7 @@
     [<a href="/static/index.html">Static Index</a>]
     [<a href="/index.html">Old Index</a>]
     [<a href="{% url 'story-list' %}">Stories</a>]        
+    [<a href="{% url 'comment-list' %}">Comments</a>]        
 </div>
 {% if user.is_staff %}
     <div class="box">

@@ -1,16 +1,22 @@
 {% extends "comments/comment_list.html" %}
 
 {% block content %}
-    <h1>Comment Preview</h1>
     {% if comment.parent %}
-        {% with comment=comment.parent %}
+        <h1>Comment Preview</h1>
+        {% with comment=comment.parent showform=False %}
             {% include "comments/fragments/comment_detail.html" %}
         {% endwith %}
+    {% else %}
+      <h1>Story Preview</h1>
     {% endif %}
     
     {% if not require_preview %}
     <div class="preview">
-        {% include "comments/fragments/comment_detail.html" %}
+        {% if True or comment.parent %}
+            {% include "comments/fragments/comment_detail.html" %}
+        {% else %}
+            {% include "comments/fragments/story_detail.html" %}        
+        {% endif %}
     </div>
     {% endif %}
     
