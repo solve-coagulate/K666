@@ -4,7 +4,11 @@
     {% if comment.parent %}
         <h1>Comment Preview</h1>
         {% with comment=comment.parent showform=False %}
-            {% include "comments/fragments/comment_detail.html" %}
+            {% if comment.parent %}
+                {% include "comments/fragments/comment_detail.html" %}
+            {% else %}
+                {% include "stories/fragments/story_detail.html" %}
+            {% endif %}
         {% endwith %}
     {% else %}
       <h1>Story Preview</h1>
@@ -12,10 +16,10 @@
     
     {% if not require_preview %}
     <div class="preview">
-        {% if True or comment.parent %}
+        {% if comment.parent %}
             {% include "comments/fragments/comment_detail.html" %}
         {% else %}
-            {% include "comments/fragments/story_detail.html" %}        
+            {% include "stories/fragments/story_detail.html" %}
         {% endif %}
     </div>
     {% endif %}

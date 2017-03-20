@@ -12,7 +12,7 @@ def list(request):
 
 def story_list(request):
     return render(request, "stories/story_list.html", context= {
-        'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None)[:8],
+        'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None),
         })        
 
 def story_detail(request, id):
@@ -50,10 +50,12 @@ def add(request):
 
     comment = Comment(text=text, created_by=user, parent=parent)
     if not preview:
-        comment.save()
-        if False and not parent:        
-            return HttpResponseRedirect(reverse("story-detail", kwargs={"id": comment.id}))        
-        return HttpResponseRedirect(reverse("comment-detail", kwargs={"id": comment.id}))
+        comment.save()        
+        if not parent:        
+            return HttpResponseRedirect(reverse("story-detail", kwargs={"id": comment.id}))
+        if not parent.parent:
+            return HttpResponseRedirect(reverse("story-detail", kwargs={"id": parent.id}))
+        return HttpResponseRedirect(reverse("comment-detail", kwargs={"id": parent.id}))
 
     return render(request, "comments/comment_preview.html", context = {
         'comment': comment,
@@ -68,7 +70,7 @@ def reply(request, id):
     comment = Comment(text=text, created_by=user, parent=parent)
     return render(request, "comments/comment_preview.html", context = {
         'comment': comment,
-	'require_preview': True,
+	    'require_preview': True,
         })
 
 import json
