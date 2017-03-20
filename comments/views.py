@@ -73,6 +73,12 @@ def reply(request, id):
 	    'require_preview': True,
         })
 
+def source(request, id):
+    id = int(id)
+    comment = Comment.objects.get(id=id)
+    context = {'id': id, 'comment': comment}
+    return render(request, "comments/comment_source.html", context=context)
+
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import get_template

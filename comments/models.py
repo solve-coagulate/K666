@@ -4,6 +4,12 @@ import re
 
 SUBJECT_LENGTH=120
 
+def find_fold(text):
+    splits = re.findall('^---+$', text, flags=re.MULTILINE)
+    if not splits:
+        return None
+    return re.search('^-{%d}$' % max([len(s) for s in splits]), text, flags=re.MULTILINE)
+
 class Comment(models.Model):
     text = models.TextField()
     created_by = models.ForeignKey(User)
@@ -43,7 +49,7 @@ class Comment(models.Model):
 
     def story_intro(self):
         body = self.body()
-        fold = re.search('---+', body)
+        fold = find_fold(body)
         if fold:            
             lines = body[:fold.span()[0]].split('\n')
             if len(lines) and lines[-1] == "":
@@ -53,7 +59,7 @@ class Comment(models.Model):
         
     def story_body(self):
         body = self.body()
-        fold = re.search('---+', body)
+        fold = find_fold(body)
         if fold:
             lines = body[fold.span()[1]:].split('\n')
             if len(lines) and lines[0] == "":
