@@ -7,6 +7,25 @@
             background-color: #eeeeee;
             font-family: verdana, arial, helvetica, sans-serif;
             font-size: smaller;
+            box-sizing: border-box;
+            /* min-height: 47px; */
+    
+}
+
+.commenthead::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.moderation {
+    float: left;
+    height: 100%;
+}
+
+.modscore {
+    text-align: center;
+    font: bold large arial, sans-serif;
 }
 
 .commentbody {
@@ -36,6 +55,12 @@ H1         { background-color: #EEEEEE;
                   color: #000000;
                   display: inline; }
 
+.story_head::after {
+    content: "";
+    clear: both;
+    display: table;
+}                  
+                  
 .story_summary { border-bottom: 1px dashed black;
                  padding-top: 0.5em; 
                  padding: 0.5em;

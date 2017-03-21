@@ -1,9 +1,15 @@
+{% load static %}
+
 <div class='story_summary' id="comment-{{comment.id}}">
-    <div class="story_title"><h2>{{ comment.subject }}</h2></div>
-    <br />
-    <div class="story_meta">
-        <div>By <a href="#">{{ comment.created_by }}</a> {% if comment.id %}[<a h href="{% url 'comment-source' id=comment.id %}">View Source</a>]{% endif %}</div>
-        <div>Posted on {{ comment.created_on }}</div>
+    <div class='story_head'>
+        {% include "comments/fragments/moderation.html" %}
+        <div>
+            <div class="story_title"><h2>{{ comment.subject }}</h2></div>
+            <div class="story_meta">
+                <div>By <a href="#">{{ comment.created_by }}</a> {% if comment.id %}[<a h href="{% url 'comment-source' id=comment.id %}">View Source</a>]{% endif %}</div>
+                <div>Posted on {{ comment.created_on }}</div>
+            </div>
+        </div>
     </div><p />
     <div class="intro_text">{{ comment.story_intro | linebreaksbr }}</div>
 	<br />

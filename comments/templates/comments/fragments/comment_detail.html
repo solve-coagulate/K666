@@ -1,5 +1,8 @@
+{% load static %}
+
 <div id="comment-{{comment.id}}">
     <div class="commenthead">
+        {% include "comments/fragments/moderation.html" %}
         <div><b>{{ comment.subject }}</b> (<a href="{% if comment.id %}{% url "comment-detail" comment.id %}{% else %}#{% endif %}">#{{ comment.id }}</a>)</div>
         <div>by <a href="#">{{ comment.created_by }}</a> on {{ comment.created_on }}</div>
     </div>
