@@ -8,11 +8,13 @@ orionblastar@gmail.com
 
 If you want to help or join contact Procrasti or Orion first. Just read the code of comduct first in this repository.
 
+Note there is a difference between github.org and github.com, use github.com because if you use guthub.org it gives you TLS timeout errors and other stuff. SO when you clone and other stuff make sure the URL is github.com instead of github.org.
+
 # Instructions
 
 ## 1. Clone Source Repository
 ```
-$ git clone https://github.org/orionblastar/K666
+$ git clone https://github.com/orionblastar/K666
 $ cd K666
 ```
 
@@ -23,7 +25,7 @@ $ cd K666
 #### Requires docker-compose
 ```
   $ sudo apt-get install docker.io
-  $ sudo apt-install python3-pip
+  $ sudo apt-get install python3-pip
   $ sudo pip3 install docker-compose
 ```
 #### Use the dev environment file
