@@ -38,12 +38,15 @@ $ cd K666
   $ docker-compose up [-d] [--build]
 ```
 
-### 2.2 Virtual Environment (depricated, works, uses sqlite3)
+### 2.2 Virtual Environment (deprecated, works, uses sqlite3)
+The `k666-env` helper creates a Python virtual environment and starts the
+development server. If `virtualenv` is not installed it will fall back to
+`python3 -m venv`.
 ```
 $ . ./k666-env
 ```
 
-This starts the server, it should start up ready.
+This starts the server and should be ready to use.
 
 ## 3. Visit the site.
 Go to http://localhost:8000/
