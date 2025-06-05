@@ -12,9 +12,11 @@ def find_fold(text):
 
 class Comment(models.Model):
     text = models.TextField()
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
-    parent = models.ForeignKey('Comment', null=True, blank=True, db_index=True)
+    parent = models.ForeignKey(
+        'Comment', null=True, blank=True, db_index=True, on_delete=models.CASCADE
+    )
     
     class Meta:
         ordering = ['-id']
