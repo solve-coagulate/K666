@@ -6,9 +6,9 @@ procrasti@k5-stats.org
 Forked by Orion Blastar for the FreeK666 project.
 orionblastar@gmail.com
 
-If you want to help or join contact Procrasti or Orion first. Just read the code of comduct first in this repository.
+If you want to help or join contact Procrasti or Orion first. Just read the code of conduct first in this repository.
 
-Note there is a difference between github.org and github.com, use github.com because if you use guthub.org it gives you TLS timeout errors and other stuff. SO when you clone and other stuff make sure the URL is github.com instead of github.org.
+Note there is a difference between github.org and github.com. Always use `github.com` when cloning the repository to avoid TLS timeout errors.
 
 # Instructions
 
@@ -23,13 +23,19 @@ The project now uses the `django-user-messages` package, a maintained fork of
 `django_messages` compatible with Django 5.
 
 ## 2. Start the Development Server
-Run the helper script which installs dependencies, applies migrations and launches the server on port 8000.
+Run the helper script which applies migrations and launches the server on port 8000. Ensure dependencies are installed first using `pip install -r requirements.txt`.
 ```
 $ ./start_server.sh
 ```
 Visit http://localhost:8000/ to confirm the site is running. Press `Ctrl+C` to stop the server.
 
-## 3. Common Administrative Tasks
+## 3. Run the Test Suite
+After installing dependencies, execute the project's automated tests:
+```bash
+./runalltests.sh
+```
+
+## 4. Common Administrative Tasks
 The following `manage.py` commands are useful when working locally:
 
 - **Create a superuser**

@@ -24,10 +24,11 @@ The preferred method for starting the application is the helper script:
 ./start_server.sh
 ```
 
-This script installs dependencies, runs migrations and launches the Django
-development server at `http://localhost:8000/`. You can confirm it is running
-with a request such as `curl http://127.0.0.1:8000/` which should return the
-FreeK666 home page.
+This script applies migrations and launches the Django development server at
+`http://localhost:8000/`. Install dependencies first using
+`pip install -r requirements.txt`. You can confirm the server is running with a
+request such as `curl http://127.0.0.1:8000/` which should return the FreeK666
+home page.
 
 The previous `k666-env` and Docker workflows are currently non-functional and
 are kept in the `docker/` directory for reference only. They should not be used
