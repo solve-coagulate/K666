@@ -54,6 +54,22 @@ class TestCommentModel(TestCase):
         self.assertEqual(comment.subject(), "Subject")
         self.assertEqual(comment.body(), "Body")
 
+    def test_replies_counts_descendants(self):
+        """`replies` should count all descendant comments."""
+        root = Comment.objects.create(text="root", created_by=self.user)
+        child1 = Comment.objects.create(text="c1", created_by=self.user, parent=root)
+        child2 = Comment.objects.create(text="c2", created_by=self.user, parent=root)
+        Comment.objects.create(text="gc", created_by=self.user, parent=child1)
+
+        self.assertEqual(root.replies(), 3)
+        self.assertEqual(child1.replies(), 1)
+        self.assertEqual(child2.replies(), 0)
+
+    def test_replies_unsaved_comment(self):
+        """Unsaved comments have no replies."""
+        comment = self.make_comment("temp")
+        self.assertEqual(comment.replies(), 0)
+
 
 class TestAjaxEndpoints(TestCase):
     def setUp(self):
