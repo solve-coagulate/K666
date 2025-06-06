@@ -6,5 +6,6 @@
 export DJANGO_SETTINGS_MODULE=comments.test_settings
 export DEFAULT_DATABASE=sqlite3
 export DEBUG=1
+export SECRET_KEY=dev-secret-key
 
 python manage.py test comments freek666
