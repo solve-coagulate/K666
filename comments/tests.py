@@ -132,3 +132,22 @@ class StoryViewTests(TestCase):
         })
         self.assertEqual(resp.status_code, 302)
         self.assertTrue(get_user_model().objects.filter(username='newuser').exists())
+
+
+class AddCommentViewTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="poster", password="pass")
+        self.client.login(username="poster", password="pass")
+
+    def test_add_comment_redirects_and_saves(self):
+        resp = self.client.post(
+            reverse("add-comment"),
+            {"comment_text": "My first post", "post": "1"},
+        )
+        self.assertEqual(Comment.objects.count(), 1)
+        comment = Comment.objects.get()
+        self.assertRedirects(
+            resp,
+            reverse("story-detail", kwargs={"id": comment.id}),
+        )
