@@ -1,0 +1,14 @@
+# Developer Instructions
+
+## Running Tests
+
+To execute the project's automated tests, run the helper script from the repository root:
+
+```bash
+./runalltests.sh
+```
+
+This script sets the necessary environment variables and invokes the Django test suite for the `comments` app. It requires Python dependencies from `requirements.txt` to be installed.
+
+Always run this script before committing changes to verify the tests pass.
+
