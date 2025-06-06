@@ -38,10 +38,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-# 'django_messages' is disabled for now due to incompatibility with
-# Django 5.x. Once a compatible version is available this can be
-# re-enabled.
-# 'django_messages',
+# django-user-messages provides Django 5 compatible private messaging
+    'user_messages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
