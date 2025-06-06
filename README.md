@@ -16,6 +16,7 @@ Note there is a difference between github.org and github.com, use github.com bec
 ```
 $ git clone https://github.com/orionblastar/K666
 $ cd K666
+$ pip install -r requirements.txt
 ```
 
 ## 2. Create the environment
