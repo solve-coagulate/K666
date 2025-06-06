@@ -2,9 +2,10 @@
 
 ## Running Tests
 
-To execute the project's automated tests, run the helper script from the repository root:
+To execute the project's automated tests, first install the required Python dependencies and then run the helper script from the repository root:
 
 ```bash
+pip install -r requirements.txt
 ./runalltests.sh
 ```
 
