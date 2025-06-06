@@ -4,6 +4,7 @@
 export DJANGO_SETTINGS_MODULE=k666.settings
 export DEFAULT_DATABASE=sqlite3
 export DEBUG=True
+export SECRET_KEY=dev-secret-key
 
 python manage.py migrate --noinput
 exec python manage.py runserver "$@"

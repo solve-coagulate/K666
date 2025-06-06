@@ -22,6 +22,23 @@ $ pip install -r requirements.txt
 The project now uses the `django-user-messages` package, a maintained fork of
 `django_messages` compatible with Django 5.
 
+### Configure Environment Variables
+Copy `.env.example` to `.env` and adjust values as needed. At minimum set
+`SECRET_KEY` to a unique string. The example file contains a commented-out
+sample key that was generated with Django's `get_random_secret_key` utility:
+
+```bash
+cp .env.example .env
+echo "SECRET_KEY=your-production-key" >> .env
+```
+To generate a new value run:
+
+```bash
+python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+```
+These variables are loaded by the helper scripts when starting the server or
+running tests.
+
 ## 2. Start the Development Server
 Run the helper script which applies migrations and launches the server on port 8000. Ensure dependencies are installed first using `pip install -r requirements.txt`.
 ```
