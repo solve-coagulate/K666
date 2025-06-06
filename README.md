@@ -19,6 +19,9 @@ $ cd K666
 $ pip install -r requirements.txt
 ```
 
+The project now uses the `django-user-messages` package, a maintained fork of
+`django_messages` compatible with Django 5.
+
 ## 2. Start the Development Server
 Run the helper script which installs dependencies, applies migrations and launches the server on port 8000.
 ```

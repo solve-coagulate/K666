@@ -8,7 +8,7 @@ setup(
     install_requires=[
         "Django>=3.2",
         "django-allauth",
-        "django-messages",
+        "django-user-messages",
     ],
     python_requires=">=3.8",
 )
