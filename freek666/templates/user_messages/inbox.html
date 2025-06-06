@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Messages</h1>
+<ul>
+{% for message in messages_list %}
+  <li class="{{ message.tags }}">{{ message }}</li>
+{% empty %}
+  <li>No messages.</li>
+{% endfor %}
+</ul>
+<p><a href="{% url 'messages_compose' %}">Compose</a></p>
+{% endblock %}

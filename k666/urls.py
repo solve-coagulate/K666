@@ -13,8 +13,10 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  re_path(r'^blog/', include(blog_urls))
 """
-from django.urls import include, path, re_path
+from django.urls import include, path
 from django.contrib import admin
+
+import freek666.views as freek_views
 
 import comments
 
@@ -22,8 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('freek666.urls')),
     path('accounts/', include('allauth.urls')),
-    # Temporary disable django_messages until a compatible release is available
-    # path('messages/', include('django_messages.urls')),
+    path('messages/', freek_views.message_inbox, name='messages_inbox'),
+    path('messages/compose', freek_views.message_compose, name='messages_compose'),
     path('comments/', include('comments.urls')),
     path('', comments.views.story_list ),
     
