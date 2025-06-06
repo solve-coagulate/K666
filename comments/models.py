@@ -72,9 +72,18 @@ class Comment(models.Model):
         return ""
     
     def replies(self):
+        """Return the total number of descendant comments."""
+        if not self.pk:
+            return 0
+
         total = 0
-        for comment in self.comment_set.all():
-            total += 1 + comment.replies()
+        parents = [self.pk]
+        while parents:
+            children = list(
+                Comment.objects.filter(parent_id__in=parents).values_list("id", flat=True)
+            )
+            total += len(children)
+            parents = children
         return total
 
     def __str__(self):
