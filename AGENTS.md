@@ -18,23 +18,19 @@ Always run this script before committing changes to verify the tests pass.
 
 ## Running the Development Server
 
-To manually start the application, you can either use Docker or the provided
-virtual environment helper. The easiest way is to run the helper script:
+The preferred method for starting the application is the helper script:
 
 ```bash
-. ./k666-env
+./start_server.sh
 ```
 
-This creates a virtual environment (if one does not exist), installs the
-dependencies, runs migrations and then starts the Django development server at
-`http://localhost:8000/`.
+This script installs dependencies, runs migrations and launches the Django
+development server at `http://localhost:8000/`. You can confirm it is running
+with a request such as `curl http://127.0.0.1:8000/` which should return the
+FreeK666 home page.
 
-Alternatively, if you prefer Docker, ensure you have `docker-compose` installed
-and execute:
-
-```bash
-docker-compose up
-```
+The previous `k666-env` and Docker workflows are currently non-functional and
+should not be used until updated instructions are provided.
 
 Refer to the `README.md` for further details on these options.
 
