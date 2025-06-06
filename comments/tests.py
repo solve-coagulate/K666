@@ -109,3 +109,26 @@ class TestAjaxEndpoints(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(Comment.objects.count(), 0)
 
+
+class StoryViewTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="viewer", password="pass")
+
+    def test_story_list_and_detail(self):
+        story = Comment.objects.create(text="Test story\n\nBody", created_by=self.user)
+        resp = self.client.get(reverse('story-list'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, story.subject())
+        detail = self.client.get(reverse('story-detail', args=[story.id]))
+        self.assertEqual(detail.status_code, 200)
+        self.assertContains(detail, story.subject())
+
+    def test_user_signup_flow(self):
+        resp = self.client.post(reverse('account_signup'), {
+            'username': 'newuser',
+            'email': 'new@example.com',
+            'password1': 'pass12345',
+            'password2': 'pass12345',
+        })
+        self.assertEqual(resp.status_code, 302)
+        self.assertTrue(get_user_model().objects.filter(username='newuser').exists())
