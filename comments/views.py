@@ -5,7 +5,7 @@ from django.urls import reverse
 from .models import Comment
 
 # Create your views here.
-def list(request):
+def comment_list(request):
     return render(request, "comments/comment_list.html", context = {
         'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None),
         })
