@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('freek666.urls')),
     path('accounts/', include('allauth.urls')),
-    path('messages/', include('django_messages.urls')),
+    # Temporary disable django_messages until a compatible release is available
+    # path('messages/', include('django_messages.urls')),
     path('comments/', include('comments.urls')),
     path('', comments.views.story_list ),
     
