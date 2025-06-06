@@ -70,3 +70,21 @@ class AuthFlowTests(TestCase):
         )
         self.user.refresh_from_db()
         self.assertEqual(self.user.email, 'new@example.com')
+
+
+class AdminAccessTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.admin = User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="pass",
+        )
+
+    def test_admin_index_accessible(self):
+        self.assertTrue(
+            self.client.login(username="admin", password="pass")
+        )
+        response = self.client.get(reverse("admin:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Django administration")
