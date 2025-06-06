@@ -3,10 +3,10 @@ from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 from django.views.generic.base import TemplateView
 
-from .views import list, story_list, story_detail, add, detail, reply, source, ajax_preview, ajax_add, ajax_comment_form
+from .views import comment_list, story_list, story_detail, add, detail, reply, source, ajax_preview, ajax_add, ajax_comment_form
 
 urlpatterns = [
-    re_path(r'^list.html$', list, name="comment-list"),
+    re_path(r'^list.html$', comment_list, name="comment-list"),
     re_path(r'^story_list.html$', story_list, name="story-list"),
     re_path(r'^story/(?P<id>[0-9]+)$', story_detail, name="story-detail"),
     re_path(r'^add.html$', add, name="add-comment"),
