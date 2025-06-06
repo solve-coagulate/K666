@@ -35,3 +35,23 @@ class UserMessagesTests(TestCase):
         self.assertContains(inbox, "hello")
         msg.refresh_from_db()
         self.assertIsNotNone(msg.delivered_at)
+
+
+class AuthFlowTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="authuser", password="pass")
+
+    def test_login_authenticates_user(self):
+        response = self.client.post(
+            reverse('account_login'),
+            {'login': self.user.username, 'password': 'pass'},
+            follow=True,
+        )
+        self.assertTrue(response.wsgi_request.user.is_authenticated)
+
+    def test_logout_clears_session(self):
+        self.client.login(username=self.user.username, password='pass')
+        self.client.post(reverse('account_logout'), follow=True)
+        resp = self.client.get(reverse('story-list'))
+        self.assertFalse(resp.wsgi_request.user.is_authenticated)
