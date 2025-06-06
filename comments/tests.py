@@ -5,6 +5,8 @@ django.setup()
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.test import Client
 
 from .models import Comment, SUBJECT_LENGTH
 
@@ -51,4 +53,43 @@ class TestCommentModel(TestCase):
 
         self.assertEqual(comment.subject(), "Subject")
         self.assertEqual(comment.body(), "Body")
+
+
+class TestAjaxEndpoints(TestCase):
+    def setUp(self):
+        self.client = Client(enforce_csrf_checks=True)
+        User = get_user_model()
+        self.user = User.objects.create_user(username="ajaxer", password="pass")
+        self.client.force_login(self.user)
+        from django.middleware.csrf import _get_new_csrf_string
+        self.csrf = _get_new_csrf_string()
+        self.client.cookies['csrftoken'] = self.csrf
+
+    def post(self, urlname, data):
+        return self.client.post(
+            reverse(urlname),
+            data,
+            HTTP_X_CSRFTOKEN=self.csrf,
+        )
+
+    def test_ajax_preview(self):
+        response = self.post("ajax-preview-comment", {"comment_text": "preview"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Comment.objects.count(), 0)
+        self.assertIn("html", response.json())
+
+    def test_ajax_add_creates_comment(self):
+        response = self.post("ajax-add-comment", {"comment_text": "new comment"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Comment.objects.count(), 1)
+
+    def test_ajax_comment_form(self):
+        response = self.post("ajax-comment-form", {"comment_text": "text"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("textarea", response.json()["html"]) 
+
+    def test_ajax_add_validation(self):
+        response = self.post("ajax-add-comment", {})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(Comment.objects.count(), 0)
 
