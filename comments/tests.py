@@ -151,3 +151,15 @@ class AddCommentViewTests(TestCase):
             resp,
             reverse("story-detail", kwargs={"id": comment.id}),
         )
+
+    def test_authenticated_post_creates_comment_and_redirects(self):
+        resp = self.client.post(
+            reverse("add-comment"),
+            {"comment_text": "Another post", "post": "1"},
+        )
+        self.assertEqual(Comment.objects.count(), 1)
+        comment = Comment.objects.get()
+        self.assertRedirects(
+            resp,
+            reverse("story-detail", kwargs={"id": comment.id}),
+        )
