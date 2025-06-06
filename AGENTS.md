@@ -12,7 +12,7 @@ pip install -r requirements.txt
 ./runalltests.sh
 ```
 
-This script sets the necessary environment variables and invokes the Django test suite for the `comments` app. It requires Python dependencies from `requirements.txt` to be installed.
+This script sets the necessary environment variables and invokes the Django test suite for the `comments` and `freek666` apps. It requires Python dependencies from `requirements.txt` to be installed.
 
 Always run this script before committing changes to verify the tests pass.
 
