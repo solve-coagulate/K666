@@ -13,3 +13,25 @@ This script sets the necessary environment variables and invokes the Django test
 
 Always run this script before committing changes to verify the tests pass.
 
+## Running the Development Server
+
+To manually start the application, you can either use Docker or the provided
+virtual environment helper. The easiest way is to run the helper script:
+
+```bash
+. ./k666-env
+```
+
+This creates a virtual environment (if one does not exist), installs the
+dependencies, runs migrations and then starts the Django development server at
+`http://localhost:8000/`.
+
+Alternatively, if you prefer Docker, ensure you have `docker-compose` installed
+and execute:
+
+```bash
+docker-compose up
+```
+
+Refer to the `README.md` for further details on these options.
+
