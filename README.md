@@ -19,44 +19,37 @@ $ cd K666
 $ pip install -r requirements.txt
 ```
 
-## 2. Create the environment
-
-### 2.1 Docker Compose (prefered method)
-
-#### Requires docker-compose
+## 2. Start the Development Server
+Run the helper script which installs dependencies, applies migrations and launches the server on port 8000.
 ```
-  $ sudo apt-get install docker.io
-  $ sudo apt-get install python3-pip
-  $ sudo pip3 install docker-compose
+$ ./start_server.sh
 ```
-#### Use the dev environment file
-```
-  $ ln -s .env.dev .env
-```
+Visit http://localhost:8000/ to confirm the site is running. Press `Ctrl+C` to stop the server.
 
-#### Start it
-```
-  $ docker-compose up [-d] [--build]
-```
+## 3. Common Administrative Tasks
+The following `manage.py` commands are useful when working locally:
 
-### 2.2 Virtual Environment (deprecated, works, uses sqlite3)
-The `k666-env` helper creates a Python virtual environment and starts the
-development server. If `virtualenv` is not installed it will fall back to
-`python3 -m venv`.
-```
-$ . ./k666-env
-```
+- **Create a superuser**
+  ```
+  $ python manage.py createsuperuser
+  ```
+- **Run database migrations**
+  ```
+  $ python manage.py migrate
+  ```
+- **Dump the database**
+  ```
+  $ python manage.py dumpdata --indent 4 > dump.fixtures.json
+  ```
+- **Load data into the database**
+  ```
+  $ python manage.py loaddata dump.fixtures.json
+  ```
 
-This starts the server and should be ready to use.
+### Legacy Docker and `k666-env` Workflows
+Docker Compose and the old `k666-env` helper are currently unsupported. They remain in the repository for reference only and should not be used until updated instructions are provided.
 
-## 3. Visit the site.
-Go to http://localhost:8000/
-
-## 4. Hooray!
-
-We have begun.
-
-# K666 
+# K666
 
 K666 is a free and open source forum platform.
 
