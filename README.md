@@ -47,7 +47,10 @@ The following `manage.py` commands are useful when working locally:
   ```
 
 ### Legacy Docker and `k666-env` Workflows
-Docker Compose and the old `k666-env` helper are currently unsupported. They remain in the repository for reference only and should not be used until updated instructions are provided.
+Docker Compose and the old `k666-env` helper are currently unsupported.
+All related files, including `.env.dev`, have been moved into the `docker/`
+directory for reference only. Do not use these scripts until updated
+instructions are provided.
 
 # K666
 

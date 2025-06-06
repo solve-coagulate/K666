@@ -30,7 +30,8 @@ with a request such as `curl http://127.0.0.1:8000/` which should return the
 FreeK666 home page.
 
 The previous `k666-env` and Docker workflows are currently non-functional and
-should not be used until updated instructions are provided.
+should not be used until updated instructions are provided. All related files
+have been moved into the `docker/` directory for reference only.
 
 Refer to the `README.md` for further details on these options.
 
