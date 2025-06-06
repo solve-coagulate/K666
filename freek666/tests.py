@@ -55,3 +55,18 @@ class AuthFlowTests(TestCase):
         self.client.post(reverse('account_logout'), follow=True)
         resp = self.client.get(reverse('story-list'))
         self.assertFalse(resp.wsgi_request.user.is_authenticated)
+
+    def test_update_email(self):
+        self.client.login(username=self.user.username, password='pass')
+        resp = self.client.post(
+            reverse('account_email'),
+            {'action_add': '', 'email': 'new@example.com'},
+        )
+        self.assertEqual(resp.status_code, 302)
+
+        self.client.post(
+            reverse('account_email'),
+            {'action_primary': '', 'email': 'new@example.com'},
+        )
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.email, 'new@example.com')
