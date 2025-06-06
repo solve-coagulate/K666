@@ -14,15 +14,17 @@
                 {% if request.user.is_authenticated %}
                     <a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return ajax_reply({{comment.id}});">Reply to This</a>
                 {% endif %}
-                {% if comment.id %}| <a h href="{% url 'comment-source' id=comment.id %}">View Source</a>{% endif %}
+                {% if comment.id %}| <a href="{% url 'comment-source' id=comment.id %}">View Source</a>{% endif %}
             ]{% endif %}
         </div>
         
     </div>
-	<dl><dt></dt><dd>
+        <dl><dt></dt><dd>
             <div class="hidden" id="reply-form-{{comment.id}}">Loading reply form for comment {{comment.id}}...</div>
-            {% for comment in comment.comment_set.all %}
-                {% include "comments/fragments/comment_detail.html" %}
-            {% endfor %}
-    </dd></dl> 
+            {% if comment.id %}
+                {% for comment in comment.comment_set.all %}
+                    {% include "comments/fragments/comment_detail.html" %}
+                {% endfor %}
+            {% endif %}
+    </dd></dl>
 </div>
