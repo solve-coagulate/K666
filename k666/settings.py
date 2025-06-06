@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^_bk5wj9el+un48)*jyeva_482cky7ap1p)djrk6a8qr7v()@$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+# Default to False if the environment variable is not set.
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = []
 
@@ -105,8 +106,14 @@ DATABASE_CHOICES = {
     }
 }
 
+# Choose the default database backend via the `DEFAULT_DATABASE` environment
+# variable. It defaults to "sqlite" if unspecified.
+DEFAULT_DATABASE = os.environ.get('DEFAULT_DATABASE', 'sqlite')
+if DEFAULT_DATABASE == 'sqlite':
+    DEFAULT_DATABASE = 'sqlite3'
+
 DATABASES = {
-    'default': DATABASE_CHOICES[os.environ['DEFAULT_DATABASE']],
+    'default': DATABASE_CHOICES[DEFAULT_DATABASE],
 }
 
 
