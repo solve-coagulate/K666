@@ -1,5 +1,8 @@
 # Developer Instructions
 
+Always keep this `AGENTS.md` file current. Update it whenever processes or
+instructions change so that contributors have the latest guidance.
+
 ## Running Tests
 
 To execute the project's automated tests, first install the required Python dependencies and then run the helper script from the repository root:
