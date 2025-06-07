@@ -14,7 +14,7 @@ Note there is a difference between github.org and github.com. Always use `github
 
 ## 1. Clone Source Repository
 ```
-$ git clone https://github.com/orionblastar/K666
+$ git clone https://github.com/solve-coagulate/K666
 $ cd K666
 $ pip install -r requirements.txt
 ```
