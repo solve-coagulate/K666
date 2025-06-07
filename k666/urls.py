@@ -16,16 +16,13 @@ Including another URLconf
 from django.urls import include, path
 from django.contrib import admin
 
-import freek666.views as freek_views
-
 import comments
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('freek666.urls')),
     path('accounts/', include('allauth.urls')),
-    path('messages/', freek_views.message_inbox, name='messages_inbox'),
-    path('messages/compose', freek_views.message_compose, name='messages_compose'),
+    path('messages/', include('django_messages.urls')),
     path('comments/', include('comments.urls')),
     path('', comments.views.story_list ),
     
