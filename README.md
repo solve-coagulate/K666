@@ -19,8 +19,7 @@ $ cd K666
 $ pip install -r requirements.txt
 ```
 
-The project now uses the `django-user-messages` package, a maintained fork of
-`django_messages` compatible with Django 5.
+The project uses the `django-messages` package from arneb patched for Django 5 compatibility.
 
 ### Configure Environment Variables
 Copy `.env.example` to `.env` and adjust values as needed. At minimum set
