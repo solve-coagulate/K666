@@ -208,10 +208,30 @@ class ModerationVoteTests(TestCase):
 
     def test_moderation_template_displays_score(self):
         ModerationVote.objects.create(comment=self.comment, user=self.other, value=1)
+        from django.test.client import RequestFactory
         from django.template.loader import render_to_string
+        request = RequestFactory().get("/")
+        request.user = self.other
         html = render_to_string(
             "comments/fragments/moderation.html",
             {"comment": self.comment},
+            request=request,
         )
         self.assertIn(f'id="modscore-{self.comment.id}"', html)
         self.assertIn("1", html)
+
+    def test_moderation_template_highlights_user_vote(self):
+        ModerationVote.objects.create(comment=self.comment, user=self.user, value=1)
+        from django.test.client import RequestFactory
+        from django.template.loader import render_to_string
+        factory = RequestFactory()
+        request = factory.get("/")
+        request.user = self.user
+        html = render_to_string(
+            "comments/fragments/moderation.html",
+            {"comment": self.comment},
+            request=request,
+        )
+        self.assertIn('id="upvote-{}"'.format(self.comment.id), html)
+        self.assertIn('/static/images/up.jpg', html)
+        self.assertIn('/static/images/downgrey.jpg', html)

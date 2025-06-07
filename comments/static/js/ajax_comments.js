@@ -199,6 +199,17 @@ function vote(comment_id, value) {
             if (score_el) {
                 score_el.textContent = json.score;
             }
+            var up_el = document.getElementById("upvote-" + comment_id);
+            var down_el = document.getElementById("downvote-" + comment_id);
+            if (up_el && down_el) {
+                if (value > 0) {
+                    up_el.src = "/static/images/up.jpg";
+                    down_el.src = "/static/images/downgrey.jpg";
+                } else {
+                    up_el.src = "/static/images/upgrey.jpg";
+                    down_el.src = "/static/images/down.jpg";
+                }
+            }
         },
         error: function(xhr, status, error) {
             alert("Vote failed: " + error);
