@@ -102,7 +102,13 @@ class TestAjaxEndpoints(TestCase):
     def test_ajax_comment_form(self):
         response = self.post("ajax-comment-form", {"comment_text": "text"})
         self.assertEqual(response.status_code, 200)
-        self.assertIn("textarea", response.json()["html"]) 
+        self.assertIn("textarea", response.json()["html"])
+
+    def test_ajax_comment_form_allows_empty_text(self):
+        """The comment form endpoint should accept empty text."""
+        response = self.post("ajax-comment-form", {"comment_text": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("textarea", response.json()["html"])
 
     def test_ajax_add_validation(self):
         response = self.post("ajax-add-comment", {})

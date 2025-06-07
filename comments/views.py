@@ -84,15 +84,25 @@ import logging
 from django.views.decorators.csrf import csrf_protect
 from django.template.loader import get_template
 from django.http import HttpResponseBadRequest
-from .forms import CommentForm
+from .forms import CommentForm, CommentFormOptionalText
 
 logger = logging.getLogger(__name__)
 
 @csrf_protect
 def ajax_comment_form(request):
-    form = CommentForm(request.POST)
+    """Return a comment form fragment via AJAX.
+
+    Unlike :func:`ajax_add`, this endpoint is used to fetch the form markup
+    before the user has typed anything.  Accept an empty ``comment_text`` value
+    by using :class:`CommentFormOptionalText`.
+    """
+
+    form = CommentFormOptionalText(request.POST)
     if not form.is_valid():
-        return HttpResponseBadRequest(json.dumps({'errors': form.errors}), content_type="application/json")
+        return HttpResponseBadRequest(
+            json.dumps({'errors': form.errors}),
+            content_type="application/json",
+        )
 
     template = get_template("comments/fragments/comment_form.html")
     comment = Comment(
