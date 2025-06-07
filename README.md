@@ -19,7 +19,8 @@ $ cd K666
 $ pip install -r requirements.txt
 ```
 
-The project uses the `django-messages` package from arneb patched for Django 5 compatibility.
+The project uses the `django-messages` package from the `solve-coagulate` fork,
+which includes Django 5 compatibility fixes.
 
 ### Configure Environment Variables
 Copy `.env.example` to `.env` and adjust values as needed. At minimum set

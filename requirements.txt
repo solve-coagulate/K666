@@ -1,3 +1,3 @@
 Django
 django-allauth
-django-messages @ git+https://github.com/arneb/django-messages.git
+django-messages @ git+https://github.com/solve-coagulate/django-messages.git
