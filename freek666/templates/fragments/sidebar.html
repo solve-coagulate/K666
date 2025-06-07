@@ -22,11 +22,12 @@
     </div>
 {% endif %}
 <div class="box">
-    <h2>Other Links</h2>    
+    <h2>Other Links</h2>
     [<a href="/static/index.html">Static Index</a>]
     [<a href="/index.html">Old Index</a>]
-    [<a href="{% url 'story-list' %}">Stories</a>]        
-    [<a href="{% url 'comment-list' %}">Comments</a>]        
+    [<a href="{% url 'story-list' %}">Stories</a>]
+    [<a href="{% url 'comment-list' %}">Comments</a>]
+    [<a href="{% url 'user_list' %}">Users</a>]
 </div>
 {% if user.is_staff %}
     <div class="box">

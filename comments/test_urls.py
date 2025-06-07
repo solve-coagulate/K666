@@ -6,5 +6,6 @@ urlpatterns = [
     path('messages/', include('django_messages.urls')),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
+    path('', include('freek666.urls')),
 ]
 urlpatterns += comment_urls.urlpatterns

@@ -92,3 +92,20 @@ class AdminAccessTests(TestCase):
         response = self.client.get(reverse("admin:index"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Django administration")
+
+
+class UserListViewTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user1 = User.objects.create_user(username="alpha")
+        self.user2 = User.objects.create_user(username="beta")
+
+    def test_user_list_view_lists_users(self):
+        resp = self.client.get(reverse("user_list"))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, self.user1.username)
+        self.assertContains(resp, self.user2.username)
+
+    def test_homepage_links_to_user_list(self):
+        resp = self.client.get(reverse("story-list"))
+        self.assertContains(resp, reverse("user_list"))
