@@ -6,9 +6,10 @@ INSTALLED_APPS=[
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'freek666',
     'comments',
-    'user_messages',
+    'django_messages',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -28,3 +29,4 @@ DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:
 USE_TZ=True
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 STATIC_URL='/static/'
+SITE_ID=1

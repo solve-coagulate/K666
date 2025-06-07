@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django import forms
 
-from user_messages import api as user_messages_api
+from . import message_utils
 
 
 class ComposeForm(forms.Form):
@@ -14,7 +14,7 @@ class ComposeForm(forms.Form):
 
 @login_required
 def message_inbox(request):
-    messages_list = user_messages_api.get_messages(request=request)
+    messages_list = message_utils.inbox_for(request.user)
     return render(request, "user_messages/inbox.html", {"messages_list": messages_list})
 
 
@@ -23,9 +23,10 @@ def message_compose(request):
     if request.method == "POST":
         form = ComposeForm(request.POST)
         if form.is_valid():
-            user_messages_api.info(
-                form.cleaned_data["to"],
-                form.cleaned_data["message"],
+            message_utils.send_message(
+                sender=request.user,
+                recipient=form.cleaned_data["to"],
+                body=form.cleaned_data["message"],
             )
             messages.success(request, "Message sent")
             return redirect("messages_inbox")

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
-from user_messages.models import Message
+from django_messages.models import Message
 
 
 class UserMessagesTests(TestCase):
@@ -25,16 +25,16 @@ class UserMessagesTests(TestCase):
 
         self.assertEqual(Message.objects.count(), 1)
         msg = Message.objects.get()
-        self.assertEqual(msg.user, self.receiver)
-        self.assertEqual(msg.message, "hello")
-        self.assertIsNone(msg.delivered_at)
+        self.assertEqual(msg.recipient, self.receiver)
+        self.assertEqual(msg.body, "hello")
+        self.assertIsNone(msg.read_at)
 
         self.client.logout()
         self.client.login(username="receiver", password="pass")
         inbox = self.client.get(reverse("messages_inbox"))
-        self.assertContains(inbox, "hello")
+        self.assertContains(inbox, "(no subject)")
         msg.refresh_from_db()
-        self.assertIsNotNone(msg.delivered_at)
+        self.assertIsNone(msg.read_at)
 
 
 class AuthFlowTests(TestCase):
