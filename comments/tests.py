@@ -235,3 +235,11 @@ class ModerationVoteTests(TestCase):
         self.assertIn('id="upvote-{}"'.format(self.comment.id), html)
         self.assertIn('/static/images/up.jpg', html)
         self.assertIn('/static/images/downgrey.jpg', html)
+
+
+class AdminRegistrationTests(TestCase):
+    def test_moderation_vote_registered(self):
+        from django.contrib import admin
+        from comments.models import ModerationVote
+
+        self.assertIn(ModerationVote, admin.site._registry)
