@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from .models import Comment
 
 # Create your views here.
-def list(request):
+def comment_list(request):
     return render(request, "comments/comment_list.html", context = {
         'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None),
         })
@@ -80,51 +80,63 @@ def source(request, id):
     return render(request, "comments/comment_source.html", context=context)
 
 import json
-from django.views.decorators.csrf import csrf_exempt
+import logging
+from django.views.decorators.csrf import csrf_protect
 from django.template.loader import get_template
+from django.http import HttpResponseBadRequest
+from .forms import CommentForm, CommentFormOptionalText
 
-@csrf_exempt
+logger = logging.getLogger(__name__)
+
+@csrf_protect
 def ajax_comment_form(request):
-    template = get_template("comments/fragments/comment_form.html");
-    text = request.POST['comment_text']
-    user = request.user
-    parent = None
-    if "parent_comment_id" in request.POST.keys() and request.POST["parent_comment_id"] and request.POST["parent_comment_id"]!="None":
-        parent_comment_id = int(request.POST["parent_comment_id"])
-        parent = Comment.objects.get(id=parent_comment_id)
+    """Return a comment form fragment via AJAX.
 
-    comment = Comment(text=text, created_by=user, parent=parent)
-    context = {'comment': comment}
-    html = template.render(context, request)
+    Unlike :func:`ajax_add`, this endpoint is used to fetch the form markup
+    before the user has typed anything.  Accept an empty ``comment_text`` value
+    by using :class:`CommentFormOptionalText`.
+    """
 
-    result = {"html": html, }
-    print("HTML: ", html)
-    return HttpResponse(json.dumps(result), content_type = "application/json")
+    form = CommentFormOptionalText(request.POST)
+    if not form.is_valid():
+        return HttpResponseBadRequest(
+            json.dumps({'errors': form.errors}),
+            content_type="application/json",
+        )
+
+    template = get_template("comments/fragments/comment_form.html")
+    comment = Comment(
+        text=form.cleaned_data['comment_text'],
+        created_by=request.user,
+        parent=form.cleaned_data['parent_comment_id'],
+    )
+    html = template.render({'comment': comment}, request)
+    logger.debug("Rendered comment form HTML: %s", html)
+    result = {"html": html}
+    return HttpResponse(json.dumps(result), content_type="application/json")
     
 
-@csrf_exempt
+@csrf_protect
 def ajax_add(request, save=True):
+    form = CommentForm(request.POST)
+    if not form.is_valid():
+        return HttpResponseBadRequest(json.dumps({'errors': form.errors}), content_type="application/json")
 
-    text = request.POST['comment_text']
-    user = request.user
-    parent = None
-    if "parent_comment_id" in request.POST.keys() and request.POST["parent_comment_id"] and request.POST["parent_comment_id"]!="None":
-        parent_comment_id = int(request.POST["parent_comment_id"])
-        parent = Comment.objects.get(id=parent_comment_id)
-
-    comment = Comment(text=text, created_by=user, parent=parent)
+    comment = Comment(
+        text=form.cleaned_data['comment_text'],
+        created_by=request.user,
+        parent=form.cleaned_data['parent_comment_id'],
+    )
     if save:
         comment.save()
 
     template = get_template("comments/fragments/comment_detail.html")
-    context = {'comment': comment}
-    html = template.render(context, request)
-
-    result = {"html": html, }
-    return HttpResponse(json.dumps(result), content_type = "application/json")
+    html = template.render({'comment': comment}, request)
+    result = {"html": html}
+    return HttpResponse(json.dumps(result), content_type="application/json")
     # return HttpResponse(json.dumps({"html": "hello"}), content_type = "application/json")
     # return HttpResponse(json.dumps({"markdown": markdown}), content_type = "application/json")
 
-@csrf_exempt
+@csrf_protect
 def ajax_preview(request):
     return ajax_add(request, save=False)

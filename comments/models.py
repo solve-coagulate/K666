@@ -12,9 +12,11 @@ def find_fold(text):
 
 class Comment(models.Model):
     text = models.TextField()
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
-    parent = models.ForeignKey('Comment', null=True, blank=True, db_index=True)
+    parent = models.ForeignKey(
+        'Comment', null=True, blank=True, db_index=True, on_delete=models.CASCADE
+    )
     
     class Meta:
         ordering = ['-id']
@@ -70,9 +72,18 @@ class Comment(models.Model):
         return ""
     
     def replies(self):
+        """Return the total number of descendant comments."""
+        if not self.pk:
+            return 0
+
         total = 0
-        for comment in self.comment_set.all():
-            total += 1 + comment.replies()
+        parents = [self.pk]
+        while parents:
+            children = list(
+                Comment.objects.filter(parent_id__in=parents).values_list("id", flat=True)
+            )
+            total += len(children)
+            parents = children
         return total
 
     def __str__(self):

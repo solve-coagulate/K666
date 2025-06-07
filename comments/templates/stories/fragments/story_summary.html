@@ -6,12 +6,12 @@
         <div>
             <div class="story_title"><h2>{{ comment.subject }}</h2></div>
             <div class="story_meta">
-                <div>By <a href="#">{{ comment.created_by }}</a> {% if comment.id %}[<a h href="{% url 'comment-source' id=comment.id %}">View Source</a>]{% endif %}</div>
+                <div>By <a href="#">{{ comment.created_by }}</a> {% if comment.id %}[<a href="{% url 'comment-source' id=comment.id %}">View Source</a>]{% endif %}</div>
                 <div>Posted on {{ comment.created_on }}</div>
             </div>
         </div>
     </div><p />
     <div class="intro_text">{{ comment.story_intro | linebreaksbr }}</div>
-	<br />
+        <br />
     <div>({{ comment.replies }} comments, ?? new, ?? words in story) <a class="light" href="{% if comment.id %}{% url 'story-detail' id=comment.id %}{% else %}#{% endif %}">Full Story</a></div><br />
 </div>
