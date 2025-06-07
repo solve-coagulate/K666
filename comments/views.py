@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
-from .models import Comment
+from .models import Comment, ModerationVote
 
 # Create your views here.
 def comment_list(request):
@@ -82,6 +82,7 @@ def source(request, id):
 import json
 import logging
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
 from django.http import HttpResponseBadRequest
 from .forms import CommentForm, CommentFormOptionalText
@@ -140,3 +141,28 @@ def ajax_add(request, save=True):
 @csrf_protect
 def ajax_preview(request):
     return ajax_add(request, save=False)
+
+
+@csrf_protect
+@login_required
+def ajax_vote(request):
+    """Handle an AJAX moderation vote on a comment."""
+    if request.method != "POST":
+        return HttpResponseBadRequest("POST required")
+
+    try:
+        comment_id = int(request.POST.get("comment_id"))
+        value = int(request.POST.get("value"))
+    except (TypeError, ValueError):
+        return HttpResponseBadRequest("Invalid parameters")
+
+    try:
+        comment = Comment.objects.get(pk=comment_id)
+    except Comment.DoesNotExist:
+        return HttpResponseBadRequest("Invalid comment")
+
+    vote, _ = ModerationVote.objects.update_or_create(
+        comment=comment, user=request.user, defaults={"value": value}
+    )
+    score = comment.mod_score()
+    return HttpResponse(json.dumps({"score": score}), content_type="application/json")

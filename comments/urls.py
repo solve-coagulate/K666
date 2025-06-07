@@ -3,7 +3,19 @@ from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 from django.views.generic.base import TemplateView
 
-from .views import comment_list, story_list, story_detail, add, detail, reply, source, ajax_preview, ajax_add, ajax_comment_form
+from .views import (
+    comment_list,
+    story_list,
+    story_detail,
+    add,
+    detail,
+    reply,
+    source,
+    ajax_preview,
+    ajax_add,
+    ajax_comment_form,
+    ajax_vote,
+)
 
 urlpatterns = [
     re_path(r'^list.html$', comment_list, name="comment-list"),
@@ -16,4 +28,5 @@ urlpatterns = [
     re_path(r'^ajax_preview.html$', ajax_preview, name="ajax-preview-comment"),
     re_path(r'^ajax_add.html$', ajax_add, name="ajax-add-comment"),
     re_path(r'^ajax_comment_form.html$', ajax_comment_form, name="ajax-comment-form"),
+    re_path(r'^ajax_vote.html$', ajax_vote, name="ajax-vote"),
 ]
