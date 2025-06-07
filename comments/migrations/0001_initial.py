@@ -18,8 +18,21 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('text', models.TextField()),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('parent', models.ForeignKey(null=True, to='comments.Comment')),
+                (
+                    'created_by',
+                    models.ForeignKey(
+                        to=settings.AUTH_USER_MODEL,
+                        on_delete=models.CASCADE,
+                    ),
+                ),
+                (
+                    'parent',
+                    models.ForeignKey(
+                        null=True,
+                        to='comments.Comment',
+                        on_delete=models.CASCADE,
+                    ),
+                ),
             ],
             options={
                 'ordering': ['-id'],
