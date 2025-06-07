@@ -14,3 +14,11 @@ class CommentForm(forms.Form):
         except Comment.DoesNotExist:
             raise forms.ValidationError("Invalid parent comment")
 
+
+class CommentFormOptionalText(CommentForm):
+    """Variant of :class:`CommentForm` where ``comment_text`` is optional."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["comment_text"].required = False
+
