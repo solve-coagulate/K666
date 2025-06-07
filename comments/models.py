@@ -96,6 +96,13 @@ class Comment(models.Model):
         agg = self.votes.aggregate(total=models.Sum("value"))
         return agg["total"] or 0
 
+    def user_vote(self, user):
+        """Return the value of ``user``'s moderation vote or ``None``."""
+        if not self.pk or not user.is_authenticated:
+            return None
+        vote = self.votes.filter(user=user).first()
+        return vote.value if vote else None
+
 
 class ModerationVote(models.Model):
     """Record a user's moderation vote on a comment."""

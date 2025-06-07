@@ -1,13 +1,14 @@
-{% load static %}
+{% load static comment_extras %}
 
+{% user_vote comment request.user as vote %}
 <div class="moderation">
     <div>
-        <img src="{% static 'images/upgrey.jpg' %}" width="20px" onclick="return vote({{ comment.id }}, 1);"/>
+        <img id="upvote-{{ comment.id }}" src="{% static 'images/' %}{% if vote == 1 %}up.jpg{% else %}upgrey.jpg{% endif %}" width="20px" onclick="return vote({{ comment.id }}, 1);"/>
     </div>
     <div class="modscore" id="modscore-{{ comment.id }}">
         {{ comment.mod_score }}
     </div>
     <div>
-        <img src="{% static 'images/downgrey.jpg' %}" width="20px" onclick="return vote({{ comment.id }}, -1);"/>
+        <img id="downvote-{{ comment.id }}" src="{% static 'images/' %}{% if vote == -1 %}down.jpg{% else %}downgrey.jpg{% endif %}" width="20px" onclick="return vote({{ comment.id }}, -1);"/>
     </div>
 </div>
