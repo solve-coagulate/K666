@@ -19,8 +19,7 @@ $ cd K666
 $ pip install -r requirements.txt
 ```
 
-The project uses the `django-messages` package from the `solve-coagulate` fork,
-which includes Django 5 compatibility fixes.
+The project uses our branch of `solve-coagulate/django-messages` for user-to-user private messaging. This fork already includes Django 5 compatibility fixes. `django-user-messages` is not used for this feature.
 
 ### Configure Environment Variables
 Copy `.env.example` to `.env` and adjust values as needed. At minimum set
