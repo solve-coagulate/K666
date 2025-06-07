@@ -1,0 +1,17 @@
+{% with comment.parent.id as parent_id %}
+    <div class="preview hidden" id="comment-preview-{{parent_id}}"></div>
+
+    <form class="" action="{% url 'add-comment' %}" method="post" >
+        {% csrf_token %}
+        <textarea class="comment_textbox" name="comment_text" id="comment-textbox-{{parent_id}}" placeholder="Subject on first line">{% if showform %}{{comment.text}}{% endif %}</textarea><br />
+        <input type="hidden" name="comment_parent_id" value="{{parent_id}}" />
+        {% if not require_preview %}
+        <input type="submit" class="submit {% if not showform %}hidden{% endif %}" name="post" value="Post" id="comment-post-button-{{parent_id}}" onclick="return ajax_post('{{parent_id}}');"/>
+        {% endif %}
+        <input type="submit" class="submit" name="preview" value="Preview" id="comment-preview-button-{{parent_id}}" onclick="return ajax_preview('{{parent_id}}');"/>
+        <input type="submit" class="submit hidden" value="Edit" id="comment-edit-button-{{parent_id}}" onclick="return edit('{{parent_id}}');"/>
+        <p />
+    </form>
+
+    <div id="new-comments-{{parent_id}}"></div>
+{% endwith %}

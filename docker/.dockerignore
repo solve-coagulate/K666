@@ -1,0 +1,13 @@
+env
+build
+dist
+k666.egg-info
+db.sqlite3
+*.pyc
+docker-createsuperuser.sh
+docker-loaddata.sh
+docker-dumpdata.sh
+docker-compose.yml
+Dockerfile
+wait-for-it
+dump.fixtures.json
