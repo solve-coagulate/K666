@@ -8,4 +8,7 @@ export DEFAULT_DATABASE=sqlite3
 export DEBUG=1
 export SECRET_KEY=dev-secret-key
 
-python manage.py test comments freek666
+python manage.py test comments freek666 || exit 1
+
+# Basic check that the development server starts correctly
+python test_server.py || exit 1
