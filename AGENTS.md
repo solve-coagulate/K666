@@ -36,3 +36,10 @@ until updated instructions are provided.
 
 Refer to the `README.md` for further details on these options.
 
+## Private Messaging Status
+
+The project is experimenting with the legacy `django-messages` package instead
+of `django-user-messages`. The integration is incomplete and the private
+messaging features may not work correctly yet. Contributors should be aware
+this area is under active development and subject to change.
+

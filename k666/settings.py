@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-# django-user-messages provides Django 5 compatible private messaging
-    'user_messages',
+# django-messages is used for private messaging (patched for Django 5)
+    'django_messages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
