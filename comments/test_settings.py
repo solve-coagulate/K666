@@ -23,7 +23,7 @@ MIDDLEWARE=[
     'allauth.account.middleware.AccountMiddleware',
 ]
 ROOT_URLCONF='comments.test_urls'
-TEMPLATES=[{'BACKEND':'django.template.backends.django.DjangoTemplates','APP_DIRS':True,'OPTIONS':{'context_processors':['django.template.context_processors.request','django.contrib.auth.context_processors.auth','django.contrib.messages.context_processors.messages','user_messages.context_processors.messages']}}]
+TEMPLATES=[{'BACKEND':'django.template.backends.django.DjangoTemplates','APP_DIRS':True,'OPTIONS':{'context_processors':['django.template.context_processors.request','django.contrib.auth.context_processors.auth','django.contrib.messages.context_processors.messages']}}]
 DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}}
 USE_TZ=True
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
