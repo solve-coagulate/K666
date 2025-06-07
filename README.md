@@ -68,8 +68,17 @@ The following `manage.py` commands are useful when working locally:
   ```
 - **Load data into the database**
   ```
-  $ python manage.py loaddata dump.fixtures.json
-  ```
+$ python manage.py loaddata dump.fixtures.json
+```
+
+## 5. Comment Moderation
+Comments can be up or down voted by authenticated users. Each vote contributes
+`+1` or `-1` to a comment's moderation score. The current score is displayed
+next to every comment and story. Votes are submitted asynchronously via the
+`ajax_vote` endpoint and update the score without reloading the page.
+
+Run `./runalltests.sh` after installing dependencies to execute the moderation
+tests along with the rest of the suite.
 
 ### Legacy Docker and `k666-env` Workflows
 Docker Compose and the old `k666-env` helper are currently unsupported. These files are stored under the `docker/` directory for reference only and should not be used until updated instructions are provided.

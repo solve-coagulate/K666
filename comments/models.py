@@ -88,3 +88,29 @@ class Comment(models.Model):
 
     def __str__(self):
         return "Comment: #%d by %s on %s --- %s" % (self.id or 0, self.created_by, self.created_on, self.text[:120])
+
+    def mod_score(self):
+        """Return the sum of all moderation votes for this comment."""
+        if not self.pk:
+            return 0
+        agg = self.votes.aggregate(total=models.Sum("value"))
+        return agg["total"] or 0
+
+
+class ModerationVote(models.Model):
+    """Record a user's moderation vote on a comment."""
+
+    comment = models.ForeignKey(
+        Comment,
+        related_name="votes",
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.SmallIntegerField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("comment", "user")
+
+    def __str__(self):
+        return f"Vote {self.value} by {self.user} on comment {self.comment_id}"

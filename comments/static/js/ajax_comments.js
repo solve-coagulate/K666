@@ -188,3 +188,21 @@ function ajax_post(comment_parent_id) {
     
     return false;
 }
+
+function vote(comment_id, value) {
+    $.ajax({
+        url: "/comments/ajax_vote.html",
+        type: "POST",
+        data: { comment_id: comment_id, value: value },
+        success: function(json) {
+            var score_el = document.getElementById("modscore-" + comment_id);
+            if (score_el) {
+                score_el.textContent = json.score;
+            }
+        },
+        error: function(xhr, status, error) {
+            alert("Vote failed: " + error);
+        }
+    });
+    return false;
+}

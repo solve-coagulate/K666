@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.test import Client
 
-from .models import Comment, SUBJECT_LENGTH
+from .models import Comment, SUBJECT_LENGTH, ModerationVote
 
 
 class TestCommentModel(TestCase):
@@ -169,3 +169,49 @@ class AddCommentViewTests(TestCase):
             resp,
             reverse("story-detail", kwargs={"id": comment.id}),
         )
+
+
+class ModerationVoteTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="mod", password="pass")
+        self.other = User.objects.create_user(username="other")
+        self.comment = Comment.objects.create(text="c\n\nbody", created_by=self.other)
+        self.client = Client(enforce_csrf_checks=True)
+        self.client.force_login(self.user)
+        from django.middleware.csrf import _get_new_csrf_string
+        self.csrf = _get_new_csrf_string()
+        self.client.cookies['csrftoken'] = self.csrf
+
+    def post_vote(self, value):
+        return self.client.post(
+            reverse("ajax-vote"),
+            {"comment_id": self.comment.id, "value": value},
+            HTTP_X_CSRFTOKEN=self.csrf,
+        )
+
+    def test_vote_creates_record_and_returns_score(self):
+        resp = self.post_vote(1)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(self.comment.votes.count(), 1)
+        self.comment.refresh_from_db()
+        self.assertEqual(self.comment.mod_score(), 1)
+        self.assertEqual(resp.json()["score"], 1)
+
+    def test_vote_update_changes_score(self):
+        self.post_vote(1)
+        resp = self.post_vote(-1)
+        self.assertEqual(self.comment.votes.get().value, -1)
+        self.comment.refresh_from_db()
+        self.assertEqual(self.comment.mod_score(), -1)
+        self.assertEqual(resp.json()["score"], -1)
+
+    def test_moderation_template_displays_score(self):
+        ModerationVote.objects.create(comment=self.comment, user=self.other, value=1)
+        from django.template.loader import render_to_string
+        html = render_to_string(
+            "comments/fragments/moderation.html",
+            {"comment": self.comment},
+        )
+        self.assertIn(f'id="modscore-{self.comment.id}"', html)
+        self.assertIn("1", html)
