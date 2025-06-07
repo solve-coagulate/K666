@@ -1,0 +1,30 @@
+<div id="comment-{{comment.id}}">
+    <div class="commenthead">
+        <div><b>{{ comment.subject }}</b> (<a href="{% if comment.id %}{% url "comment-detail" comment.id %}{% else %}#{% endif %}">#{{ comment.id }}</a>)</div>
+        <div>by <a href="#">{{ comment.created_by }}</a> on {{ comment.created_on }}</div>
+    </div>
+    <div class="commentbody">
+        <div class="body">{{ comment.body | linebreaksbr }}</div>
+	<br />
+        <div>{% if request.user.is_authenticated or comment.parent %}[ 
+            {% if comment.parent %}
+                <a href="{% url "comment-detail" comment.parent.id %}">Parent</a>
+            {% endif %}
+            {% if request.user.is_authenticated and comment.parent %}|{% endif %}
+                {% if request.user.is_authenticated %}
+                    <a href="{% if comment.id %}{% url "comment-reply" comment.id %}{% else %}#{% endif %}" onclick="return ajax_reply({{comment.id}});">Reply to This</a>
+                {% endif %}
+                {% if comment.id %}| <a href="{% url 'comment-source' id=comment.id %}">View Source</a>{% endif %}
+            ]{% endif %}
+        </div>
+        
+    </div>
+        <dl><dt></dt><dd>
+            <div class="hidden" id="reply-form-{{comment.id}}">Loading reply form for comment {{comment.id}}...</div>
+            {% if comment.id %}
+                {% for comment in comment.comment_set.all %}
+                    {% include "comments/fragments/comment_detail.html" %}
+                {% endfor %}
+            {% endif %}
+    </dd></dl>
+</div>

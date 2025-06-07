@@ -1,0 +1,8 @@
+{% extends "comments/comment_list.html" %}
+
+{% block content %}
+    <h1>SOURCE: {{comment.subject}}</h1>
+    <div class="preview commentbody">{{ comment.text | linebreaksbr }}</div>
+    <p />
+    {% include "comments/fragments/comment_detail.html" %}
+{% endblock content %}

@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.commenthead { border: 1px solid #006699;
+            background-color: #eeeeee;
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size: smaller;
+}
+
+.commentbody {
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size: smaller;
+        }
+
+.comment_textbox { max-width: 500px; width: 100%; height: 6em;}
+
+.preview { 
+    border: 1px solid red;}
+
+.hidden { display: none;}
+            
+:link      { color: #006699; }
+:visited   { color: #003366; }
+
+BODY       { background-color: #ffffff;
+            color: #000000; }
+
+H1         { background-color: #EEEEEE;
+             font-size: 1.6em;
+             padding: 3px;
+             margin: 0px; }
+             
+.story_title H2 { font-size: 1.2em;
+                  color: #000000;
+                  display: inline; }
+
+.story_summary { border-bottom: 1px dashed black;
+                 padding-top: 0.5em; 
+                 padding: 0.5em;
+                 font-family: verdana, arial, helvetica, sans-serif;
+                 font-size: smaller;
+
+}
+
+.clearfix { 
+    /* border: 5px solid red; */
+    /* background-color: #ff0000; */
+    overflow: auto;
+    }
+                 
+.story_meta {
+    font-family: arial, Helvetica, Sans-Serif;
+    /* font-size: smaller; */
+    /* background-color: #DDDDDD; */
+}
+
+.intro_text {
+    /* background-color: #999999; */
+    white-space: pre-wrap;
+}
+
+.story_body { padding-top: 0.5em; 
+    padding: 0.5em;
+    font-family: verdana, arial, helvetica, sans-serif;
+    white-space: pre-wrap;
+    font-size: smaller;
+}
+
+.story_info { background-color: #EEEEEE;
+              text-align: center; 
+              font-family: arial, Helvetica, Sans-Serif;
+              font-size: smaller;
+    
+}
+
+/* sidebar boxes */
+
+.box       { border: 1px solid black;
+             padding: 3px;
+             margin-bottom: 8px; }
+
+.box H2    { background-color: #006699;
+             color: #ffffff;
+             font-size: 1.2em;
+             padding: 5px;
+             margin: -3px;
+             margin-bottom: 3px; }              
+              
+.sidebar {
+     padding: 1%;
+     float: right;
+     width: 100%;
+     /* background-color: blue; */
+ }
+
+.content {
+     padding: 0%;
+     float: left;
+     width: 100%;     
+ }
+ 
+@media only screen and (min-width: 500px) {
+  .sidebar {
+     width: 23%;     
+  }
+   
+  .content {
+     width: 73%;     
+  }
+}
+
+.donations {
+    white-space: pre-wrap;
+}
+
+.red {
+    background-color: red;
+}

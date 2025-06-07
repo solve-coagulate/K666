@@ -20,22 +20,26 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^_bk5wj9el+un48)*jyeva_482cky7ap1p)djrk6a8qr7v()@$'
+# Allow overriding via environment variable so secrets aren't stored in code.
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Default to False if the environment variable is not set.
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
+    'comments',
     'freek666',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+# django-messages is used for private messaging
     'django_messages',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,18 +47,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-)
+]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-)
+]
 
 ROOT_URLCONF = 'k666.urls'
 
@@ -69,13 +73,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+                ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'k666.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -85,6 +88,31 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+DATABASE_CHOICES = {
+    'sqlite3': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'postgresql': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'postgres',
+        # 'PORT': '5432',
+    }
+}
+
+# Choose the default database backend via the `DEFAULT_DATABASE` environment
+# variable. It defaults to "sqlite" if unspecified.
+DEFAULT_DATABASE = os.environ.get('DEFAULT_DATABASE', 'sqlite')
+if DEFAULT_DATABASE == 'sqlite':
+    DEFAULT_DATABASE = 'sqlite3'
+
+DATABASES = {
+    'default': DATABASE_CHOICES[DEFAULT_DATABASE],
 }
 
 
@@ -109,7 +137,9 @@ STATIC_URL = '/static/'
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/index.html'
+LOGIN_REDIRECT_URL = '/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTHENTICATION_BACKENDS = (
     

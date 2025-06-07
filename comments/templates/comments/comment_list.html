@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/ajax_comments.js"></script>   
+{% endblock %}
+    
+{% block content %}
+    <h1>Comments </h1>
+    <br />
+
+    {% if request.user.is_authenticated %}
+	{% include "comments/fragments/comment_form.html" %}
+
+        <script>
+            // If we're running a suitable javascript, show the post button!
+            // Do this before loading all the comments
+            ( function() { 
+                    post_button = document.getElementById("comment-post-button-");
+                    post_button.classList.remove("hidden");
+                }
+            )();
+        </script>    
+    {% endif %}
+
+    <div>
+        {% for comment in comments %}
+            {% include "comments/fragments/comment_detail.html" %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+version: '2'
+
+
+services:
+  freek666:
+    env_file: .env
+    build: .
+    ports: 
+      - 8000:8000
+    volumes: 
+      # - code:/code
+      - .:/code
+    depends_on:
+      - postgres
+    # entrypoint: 
+    #   - ./wait-for-it/wait-for-it.sh 
+    #   - postgres:5432 
+    #   - -- 
+    #   - ./docker-entrypoint.sh
+  postgres:
+    image: postgres
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+      
+volumes:
+  pgdata:
+    external: false
+  code:
+    external: false
