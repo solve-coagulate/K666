@@ -38,8 +38,5 @@ Refer to the `README.md` for further details on these options.
 
 ## Private Messaging Status
 
-The project is experimenting with the legacy `django-messages` package instead
-of `django-user-messages`. The integration is incomplete and the private
-messaging features may not work correctly yet. Contributors should be aware
-this area is under active development and subject to change.
+Private messaging now uses our own branch of `solve-coagulate/django-messages` and works with Django 5. We no longer rely on `django-user-messages` for this feature; it may still be used for flash notifications. The old `setup_messages.sh` script has been removed.
 
