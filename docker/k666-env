@@ -1,9 +1,8 @@
 #!/bin/bash
 #
-# This script creates a virtualenv named 'env' and installs all
-# python dependencies before activating the env and running the server.
-# If 'env' already exists, it is activated and started
-# without any installations.
+# This script creates a virtualenv named 'env', installs the Python
+# requirements, and then runs the development server.  If 'env' already
+# exists, it is activated and used as-is.
 #
 # From: electrum/electrum-env
 # Modified: procrasti@k5-stats.org 13 Aug 2015
@@ -25,9 +24,9 @@ if which ${PYTHON}; then
     fi
 
     source ./env/bin/activate
-    pip install --upgrade 'pip<7' # We want this gone too! We need the latest version of pip that supports unzip.
+    # Install project dependencies
+    pip install -r requirements.txt
     python setup.py install
-    pip unzip django_messages # We want this gone!
 
         # WHY DOESN'T THIS WORK FROM setup.py?
         # pip install django-recaptcha2
