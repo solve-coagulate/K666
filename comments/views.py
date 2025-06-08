@@ -1,19 +1,22 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.urls import reverse
 
 from .models import Comment, ModerationVote
 
 # Create your views here.
+
 def comment_list(request):
     return render(request, "comments/comment_list.html", context = {
         'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None),
         })
 
+
 def story_list(request):
     return render(request, "stories/story_list.html", context= {
         'comments': Comment.objects.order_by('-id').all().select_related().filter(parent=None),
-        })        
+        })
+
 
 def story_detail(request, id):
     id = int(id)
@@ -21,18 +24,20 @@ def story_detail(request, id):
     context = {'id': id, 'comment': comment}
     return render(request, "stories/story_detail.html", context=context)
 
+
 def detail(request, id):
     id = int(id)
     comment = Comment.objects.get(id=id)
     context = {'id': id, 'comment': comment}
     return render(request, "comments/comment_detail.html", context=context)
 
-def add(request):    
+
+def add(request):
     data = request.POST
     if not request.method == "POST":
         data = request.GET
         # return HttpResponseRedirect(reverse("comment-list"))
-        
+
     preview = True
     if request.method == "POST" and "post" in data.keys():
         preview = False
@@ -42,7 +47,7 @@ def add(request):
     if "comment_text" in data.keys():
         text = data['comment_text']
     user = request.user
-    
+
     parent = None
     if "comment_parent_id" in data.keys() and data["comment_parent_id"]:
         comment_parent_id = int(data["comment_parent_id"])
@@ -50,8 +55,8 @@ def add(request):
 
     comment = Comment(text=text, created_by=user, parent=parent)
     if not preview:
-        comment.save()        
-        if not parent:        
+        comment.save()
+        if not parent:
             return HttpResponseRedirect(reverse("story-detail", kwargs={"id": comment.id}))
         if not parent.parent:
             return HttpResponseRedirect(reverse("story-detail", kwargs={"id": parent.id}))
@@ -62,6 +67,7 @@ def add(request):
         })
     # return HttpResponseRedirect(request.META["HTTP_REFERER"] + "#comment-%s" % comment.id)
 
+
 def reply(request, id):
     id = int(id)
     parent = Comment.objects.get(id=id)
@@ -70,8 +76,9 @@ def reply(request, id):
     comment = Comment(text=text, created_by=user, parent=parent)
     return render(request, "comments/comment_preview.html", context = {
         'comment': comment,
-	    'require_preview': True,
+            'require_preview': True,
         })
+
 
 def source(request, id):
     id = int(id)
@@ -84,10 +91,10 @@ import logging
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
-from django.http import HttpResponseBadRequest
 from .forms import CommentForm, CommentFormOptionalText
 
 logger = logging.getLogger(__name__)
+
 
 @csrf_protect
 def ajax_comment_form(request):
@@ -115,7 +122,7 @@ def ajax_comment_form(request):
     logger.debug("Rendered comment form HTML: %s", html)
     result = {"html": html}
     return HttpResponse(json.dumps(result), content_type="application/json")
-    
+
 
 @csrf_protect
 def ajax_add(request, save=True):
@@ -137,6 +144,7 @@ def ajax_add(request, save=True):
     return HttpResponse(json.dumps(result), content_type="application/json")
     # return HttpResponse(json.dumps({"html": "hello"}), content_type = "application/json")
     # return HttpResponse(json.dumps({"markdown": markdown}), content_type = "application/json")
+
 
 @csrf_protect
 def ajax_preview(request):
