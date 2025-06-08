@@ -1,5 +1,6 @@
 # K666: Free Speech as in Open Source.
-[![Build Status](https://app.travis-ci.com/solve-coagulate/K666.svg?branch=master)](https://app.travis-ci.com/github/solve-coagulate/K666)
+![Tests](https://github.com/solve-coagulate/K666/actions/workflows/tests.yml/badge.svg?branch=master)
+
 
 procrasti@k5-stats.org
 
@@ -50,6 +51,9 @@ After installing dependencies, execute the project's automated tests:
 ```bash
 ./runalltests.sh
 ```
+
+Continuous integration runs the same script via [GitHub Actions](https://github.com/solve-coagulate/K666/actions/workflows/tests.yml).
+
 
 ## 4. Common Administrative Tasks
 The following `manage.py` commands are useful when working locally:
