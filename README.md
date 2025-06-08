@@ -1,10 +1,10 @@
 # K666: Free Speech as in Open Source.
-[![Build Status](https://app.travis-ci.com/solve-coagulate/K666.svg?branch=master)](https://app.travis-ci.com/github/solve-coagulate/K666)
+[![Tests](https://github.com/solve-coagulate/K666/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/solve-coagulate/K666/actions/workflows/tests.yml)
 
 procrasti@k5-stats.org
 
-Forked by Orion Blastar for the FreeK666 project.
-orionblastar@gmail.com
+K666 is a fork of Orion Blastar's work, now maintained by solve-coagulate.
+Original author contact: orionblastar@gmail.com
 
 If you want to help or join contact Procrasti or Orion first. Just read the code of conduct first in this repository.
 
@@ -19,7 +19,7 @@ $ cd K666
 $ pip install -r requirements.txt
 ```
 
-The project uses our branch of `solve-coagulate/django-messages` for user-to-user private messaging. This fork already includes Django 5 compatibility fixes. `django-user-messages` is not used for this feature.
+Private messages are handled by our branch of [solve-coagulate/django-messages](https://github.com/solve-coagulate/django-messages). The fork is installed via `requirements.txt` and already includes Django 5 compatibility fixes. The separate `django-user-messages` package is optional and now mainly used for flash notifications.
 
 ### Configure Environment Variables
 Copy `.env.example` to `.env` and adjust values as needed. At minimum set
@@ -50,6 +50,7 @@ After installing dependencies, execute the project's automated tests:
 ```bash
 ./runalltests.sh
 ```
+Continuous integration runs the same script via [GitHub Actions](https://github.com/solve-coagulate/K666/actions/workflows/tests.yml).
 
 ## 4. Common Administrative Tasks
 The following `manage.py` commands are useful when working locally:
@@ -68,8 +69,8 @@ The following `manage.py` commands are useful when working locally:
   ```
 - **Load data into the database**
   ```
-$ python manage.py loaddata dump.fixtures.json
-```
+  $ python manage.py loaddata dump.fixtures.json
+  ```
 
 ## 5. Comment Moderation
 Comments can be up or down voted by authenticated users. Each vote contributes
