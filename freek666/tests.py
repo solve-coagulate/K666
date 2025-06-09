@@ -92,3 +92,29 @@ class AdminAccessTests(TestCase):
         response = self.client.get(reverse("admin:index"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Django administration")
+
+
+class MessageUtilsTests(TestCase):
+    """Tests for helper functions in :mod:`freek666.message_utils`."""
+
+    def setUp(self):
+        User = get_user_model()
+        self.sender = User.objects.create_user(username="from", password="pass")
+        self.recipient = User.objects.create_user(username="to", password="pass")
+
+    def test_send_message_and_inbox(self):
+        from . import message_utils
+
+        msg = message_utils.send_message(
+            sender=self.sender,
+            recipient=self.recipient,
+            body="hi there",
+            subject="greeting",
+        )
+
+        self.assertEqual(Message.objects.count(), 1)
+        self.assertEqual(msg.subject, "greeting")
+        self.assertEqual(msg.recipient, self.recipient)
+
+        inbox = list(message_utils.inbox_for(self.recipient))
+        self.assertEqual(inbox, [msg])

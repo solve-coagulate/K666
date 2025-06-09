@@ -169,3 +169,56 @@ class AddCommentViewTests(TestCase):
             resp,
             reverse("story-detail", kwargs={"id": comment.id}),
         )
+
+
+class CommentMiscViewsTests(TestCase):
+    """Tests for additional comment-related views not covered above."""
+
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="misc", password="pass")
+        self.client.force_login(self.user)
+        self.comment = Comment.objects.create(
+            text="A subject\n\nBody text",
+            created_by=self.user,
+        )
+
+    def test_comment_list_shows_comment(self):
+        resp = self.client.get(reverse("comment-list"))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, self.comment.subject())
+
+    def test_comment_detail_view(self):
+        resp = self.client.get(reverse("comment-detail", args=[self.comment.id]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, self.comment.subject())
+
+    def test_reply_view_renders_preview(self):
+        resp = self.client.get(reverse("comment-reply", args=[self.comment.id]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "Comment Preview")
+
+    def test_source_view_returns_comment_source(self):
+        resp = self.client.get(reverse("comment-source", args=[self.comment.id]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "SOURCE")
+        self.assertContains(resp, self.comment.text.split("\n")[0])
+
+
+class StoryHelperTests(TestCase):
+    """Tests for story_intro and story_body helper methods."""
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="story", password="pass")
+
+    def test_story_intro_and_body_split_on_fold(self):
+        text = "Subject\n\nIntro line\n---\nThe rest"
+        comment = Comment(text=text, created_by=self.user)
+        self.assertEqual(comment.story_intro(), "Intro line")
+        self.assertEqual(comment.story_body(), "The rest")
+
+    def test_story_intro_no_fold(self):
+        text = "Subject\n\nJust a body"
+        comment = Comment(text=text, created_by=self.user)
+        self.assertEqual(comment.story_intro(), "Just a body")
+        self.assertEqual(comment.story_body(), "")
