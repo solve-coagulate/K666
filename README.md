@@ -11,6 +11,8 @@ If you want to help or join contact Procrasti or Orion first. Just read the code
 
 Note there is a difference between github.org and github.com. Always use `github.com` when cloning the repository to avoid TLS timeout errors.
 
+These instructions are intended as a quickstart for local development. If you are deploying K666 in production, see `DEPLOYMENT.md` for recommended practices.
+
 # Instructions
 
 ## 1. Clone Source Repository
