@@ -129,6 +129,15 @@ class StoryViewTests(TestCase):
         self.assertEqual(detail.status_code, 200)
         self.assertContains(detail, story.subject())
 
+    def test_story_detail_displays_comment_count(self):
+        """Story detail page should show the correct number of replies."""
+        story = Comment.objects.create(text="Subject\n\nBody", created_by=self.user)
+        Comment.objects.create(text="c1", created_by=self.user, parent=story)
+        Comment.objects.create(text="c2", created_by=self.user, parent=story)
+        detail = self.client.get(reverse('story-detail', args=[story.id]))
+        self.assertEqual(detail.status_code, 200)
+        self.assertContains(detail, "2 comments")
+
     def test_user_signup_flow(self):
         resp = self.client.post(reverse('account_signup'), {
             'username': 'newuser',
