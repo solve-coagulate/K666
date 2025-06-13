@@ -16,6 +16,12 @@ This script sets the necessary environment variables and invokes the Django test
 
 Always run this script before committing changes to verify the tests pass.
 
+## Writing Tests
+
+All new features and bug fixes must include corresponding tests. Add or update
+tests in the appropriate app so that the desired behavior is covered. Verify
+they pass by running `./runalltests.sh` before committing.
+
 ## Running the Development Server
 
 The preferred method for starting the application is the helper script:
