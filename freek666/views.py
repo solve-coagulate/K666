@@ -34,4 +34,9 @@ def message_compose(request):
         form = ComposeForm()
     return render(request, "user_messages/compose.html", {"form": form})
 
+
+@login_required
+def profile(request):
+    return render(request, "profile.html")
+
 # Create your views here.

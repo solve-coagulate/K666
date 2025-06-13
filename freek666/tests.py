@@ -118,3 +118,20 @@ class MessageUtilsTests(TestCase):
 
         inbox = list(message_utils.inbox_for(self.recipient))
         self.assertEqual(inbox, [msg])
+
+
+class ProfileViewTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="viewer", password="pass")
+
+    def test_profile_requires_login(self):
+        resp = self.client.get(reverse("account_profile"))
+        self.assertEqual(resp.status_code, 302)
+        self.assertIn("/accounts/login", resp.url)
+
+    def test_profile_displays_username(self):
+        self.client.login(username="viewer", password="pass")
+        resp = self.client.get(reverse("account_profile"))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "Hello viewer")
